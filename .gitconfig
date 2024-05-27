@@ -1,0 +1,57 @@
+# This is Git's per-user configuration file.
+[user]
+    name = Roman Kotenko
+    email = r.d.kotenko@gmail.com
+[alias]
+    a = add
+    br = branch
+    c = commit
+    cm = commit -m
+    cam = commit -a -m
+    cln = clean -dfx
+    cp = cherry-pick
+    cpa = cherry-pick --abort
+    cpc = cherry-pick --continue
+    ct = checkout
+    ctb = checkout -b
+    d = diff --diff-filter=d
+    dfn = diff --name-only
+    f = fetch
+    s = status
+    ss = status -s
+    stss = stash save
+    stsa = stash apply
+    stsd = stash drop
+    stsp = stash pop
+    stsl = stash list
+    mg = merge
+    mga = merge --abort
+    mgc = merge --continue
+    mgt = mergetool
+    pl = pull
+    rs = reset
+    rs-undo = reset --quiet HEAD@{1}
+    subupd = submodule update --init --recursive
+    undo = reset HEAD~1
+    fuckit = reset --hard
+    last = log -n 1
+    lastd = diff HEAD~1
+    lastn = log -n
+    graph = log --graph --pretty=format:'%Cred%h%Creset -%C(red)%d%Creset %s %Cgreen(%cd) %C(cyan)[%an]%Creset' --abbrev-commit --date=short
+[color "status"]
+    changed = red bold
+    untracked = red bold
+    added = green bold
+[color "diff"]
+    old = red bold
+    new = green bold
+    meta = cyan
+# [filter "lfs"]
+#    clean = git-lfs clean -- %f
+#    smudge = git-lfs smudge -- %f
+#    process = git-lfs filter-process
+#    required = true
+[submodule]
+    recurse = true
+[credential]
+    helper = store
