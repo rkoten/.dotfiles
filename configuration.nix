@@ -52,7 +52,7 @@ in {
     driSupport = true;
     driSupport32Bit = true;
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -68,8 +68,8 @@ in {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
     jack.enable = false;
+    pulse.enable = true;
   };
 
   systemd = {
@@ -87,6 +87,10 @@ in {
           TimeoutStopSec = 10;
         };
     };
+  };
+
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
   };
 
   nixpkgs.config = {
@@ -112,6 +116,7 @@ in {
     tree
     wayland
     wget
+    wireguard-tools
     wireplumber
     wl-clipboard-x11
     xwayland
@@ -141,7 +146,9 @@ in {
       unstable.hyprland
       kitty
       mc
+      qbittorrent
       qemu
+      qgis
       qt6.qtwayland
       spotify
       swaybg
@@ -398,5 +405,6 @@ in {
 
   # TODO figure out polkit agent
   # TODO fix hyprpm errors
+  # TODO fix vlc pixelation & hangs
+  # TODO add language switching
 }
-
