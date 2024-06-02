@@ -2,9 +2,10 @@
 # https://search.nixos.org/packages
 # nixos-help
 
-{ config, lib, pkgs, ... }:
+{ config, flakeInputs, lib, pkgs, ... }:
 
 let
+  # Why `nixos-unstable` and not `nixpkgs-unstable` like in flakeInputs? TODO figure out.
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
@@ -69,7 +70,7 @@ in {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = false;
+    jack.enable = true;
   };
 
   systemd = {
@@ -89,6 +90,10 @@ in {
     };
   };
 
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
   nixpkgs.config = {
     allowUnfree = true;
     joypixels.acceptLicense = true;
@@ -100,17 +105,23 @@ in {
     freeglut
     git
     gnumake
+    libexecinfo
     libgcc
+    libglvnd
     mesa
     meson
     ninja
     nvidia-vaapi-driver
+    p7zip
     pipewire
     polkit_gnome
     python3
+    rar
     rustup
     tree
+    udis86
     wayland
+    wev
     wget
     wireplumber
     wl-clipboard-x11
@@ -139,10 +150,16 @@ in {
       firefox
       gedit
       unstable.hyprland
+      imv
       kitty
       mc
+      obs-studio
+      obs-studio-plugins.wlrobs
+      qbittorrent
       qemu
       qt6.qtwayland
+      shotman
+      slurp
       spotify
       swaybg
       telegram-desktop
@@ -328,10 +345,10 @@ in {
         ];
       };
 
-      # TODO
-      # plugins = [
-      #
-      # ];
+      plugins = [
+        flakeInputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+        "${flakeInputs.hy3.packages.${pkgs.system}.hy3}/lib/libhy3.so"
+      ];
     };
   };
 
@@ -346,11 +363,6 @@ in {
     noto-fonts-cjk  # Asian languages support
     vistafonts  # Consolas <3
   ];
-
-  # TODO cachix
-  # nix.settings = {
-  #   substituters = [];
-  # }
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -374,23 +386,9 @@ in {
   # accidentally delete configuration.nix.
   system.copySystemConfiguration = true;
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "23.11"; # Did you read the comment?
+  # The state version is required and should stay at the version that was originally installed.
+  # https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+  system.stateVersion = "23.11";
 
   programs.xwayland.enable = false;
   security.polkit.enable = true;
