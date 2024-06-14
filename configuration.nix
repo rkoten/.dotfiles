@@ -9,6 +9,7 @@ let
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
+    ./wireguard.nix
     <home-manager/nixos>
   ];
 
@@ -104,11 +105,13 @@ in {
     freeglut
     git
     gnumake
+    gnupg
     libgcc
     mesa
     meson
     ninja
     nvidia-vaapi-driver
+    p7zip
     pipewire
     polkit_gnome
     python3
@@ -146,6 +149,7 @@ in {
       unstable.hyprland
       kitty
       mc
+      nodePackages.nodejs
       qbittorrent
       qemu
       qgis
@@ -370,12 +374,6 @@ in {
   # List services that you want to enable:
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
@@ -399,6 +397,16 @@ in {
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
 
+  # TODO enable when a by-number param is available
+  # https://github.com/NixOS/nix/issues/9455
+  # https://github.com/NixOS/nix/pull/10426
+  # nix.gc = {
+  #   automatic = true;
+  #   persistent = true;
+  #   dates = "05:00:00";
+  #   options = "--delete-older-than 7d";
+  # };
+
   programs.xwayland.enable = false;
   security.polkit.enable = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -407,4 +415,6 @@ in {
   # TODO fix hyprpm errors
   # TODO fix vlc pixelation & hangs
   # TODO add language switching
+  # TODO setup smb file sharing
 }
+

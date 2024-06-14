@@ -34,9 +34,8 @@
     cmake
     gnumake
     libgcc
-    # udis86
   ];
-  
+
   # shellHook:
   #   Bash statements that are executed by nix-shell. [2]
   shellHook = "";
