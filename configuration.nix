@@ -205,11 +205,11 @@ in {
           "WLR_NO_HARDWARE_CURSORS,1"
         ];
         input = {
-          kb_layout = "us";
-          kb_variant = "";
+          kb_layout = "us,ua";
+          kb_options = "grp:win_space_toggle";
           kb_model = "";
-          kb_options = "";
           kb_rules = "";
+          kb_variant = "";
           follow_mouse = 1;
           sensitivity = -0.5;  # [-1.0, 1.0]; 0 means no modification.
         };
@@ -390,4 +390,5 @@ in {
   # TODO fix vlc pixelation & hangs
   # TODO add language switching
   # TODO setup smb file sharing
+  # TODO fix cross-program links
 }
