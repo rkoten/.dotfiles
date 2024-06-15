@@ -166,7 +166,7 @@ in {
       unstable.telegram-desktop
       vlc
       unstable.vscode
-      waybar
+      unstable.waybar
       wev
       wofi
       xdg-desktop-portal-hyprland
@@ -209,6 +209,8 @@ in {
           "GBM_BACKEND,nvidia-drm"
           "__GLX_VENDOR_LIBRARY_NAME,nvidia"
           "WLR_NO_HARDWARE_CURSORS,1"
+          "QT_QPA_PLATFORM,wayland"
+          "QT_SCALE_FACTOR,1.2"
         ];
         input = {
           kb_layout = "us,ua";
