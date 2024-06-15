@@ -148,20 +148,26 @@ in {
       firefox
       gedit
       unstable.hyprland
+      imv
       kitty
       libreoffice
       mc
       nodePackages.nodejs
+      obs-studio
+      obs-studio-plugins.wlrobs
+      pavucontrol
       qbittorrent
       qemu
       qgis
       qt6.qtwayland
+      slurp
       spotify
       swaybg
-      telegram-desktop
+      unstable.telegram-desktop
       vlc
       unstable.vscode
       waybar
+      wev
       wofi
       xdg-desktop-portal-hyprland
     ];

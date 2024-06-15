@@ -34,6 +34,7 @@
     cmake
     gnumake
     libgcc
+    pavucontrol
   ];
 
   # shellHook:
