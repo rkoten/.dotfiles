@@ -1,49 +1,51 @@
 {
-    "modules-left": ["hyprland/submap", "hyprland/workspaces", "idle_inhibitor"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["tray", "hyprland/language", "pulseaudio", "network", "clock"],
+  "modules-left": ["hyprland/submap", "hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["tray", "hyprland/language", "pulseaudio", "network", "clock"],
 
-    "clock": {
-        // TODO replace %r with a non-leading-0 %I sequence once it's available.
-        // https://github.com/Alexays/Waybar/issues/1469#issuecomment-2109669878
-        "format": "{:%a %b %e  •  %r}",
-        "interval": 1,
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+  "clock": {
+    // TODO replace %r with a non-leading-0 %I sequence once it's available.
+    // https://github.com/Alexays/Waybar/issues/1469#issuecomment-2109669878
+    "format": "{:%a %b %e  •  %r}",
+    "interval": 1,
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+  },
+  "hyprland/language": {
+    "format-en": "🇺🇸",
+    "format-uk": "🇺🇦",
+  },
+  "network": {
+    "interface": "wg0",
+    "format-ethernet": "{ifname}: up ",
+    "format-disconnected": "{ifname}: down ⚠",
+    "interval" : 5,
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-muted": "0% {icon}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "portable": "",
+      "default": ["", "", ""]
     },
-    "hyprland/language": {
-        "format-en": "🇺🇸",
-        "format-uk": "🇺🇦",
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        },
-		// "on-click": "TODO?"
-    },
-    "network": {
-        "interface": "wg0",
-        "format-ethernet": "{ifname}: up ",
-        "format-disconnected": "{ifname}: down ⚠",
-        "interval" : 5,
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-muted": "0% {icon}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "portable": "",
-            "default": ["", "", ""]
-        },
-        "on-click-right": "pavucontrol",
-    },
-    "tray": {
-        "icon-size": 20,
-        "spacing": 2,
-    },
+    "on-click-right": "pavucontrol",
+  },
+  "tray": {
+    "icon-size": 20,
+  },
 }
+
+/*
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    },
+    // "on-click": "TODO https://codeberg.org/QuincePie/matcha"
+  },
+*/

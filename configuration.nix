@@ -73,6 +73,7 @@ in {
     pulse.enable = true;
   };
 
+  security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       enable = true;
@@ -130,6 +131,7 @@ in {
     isNormalUser = true;
     extraGroups = [
       "audio"
+      "networkmanager"  # Grants permission to change network settings. [1]
       "wheel"  # Enable sudo for the user.
     ];
   };
@@ -147,6 +149,7 @@ in {
       emote
       firefox
       gedit
+      gimp
       unstable.hyprland
       imv
       kitty
@@ -160,6 +163,7 @@ in {
       qemu
       qgis
       qt6.qtwayland
+      shotman
       slurp
       spotify
       swaybg
@@ -175,6 +179,8 @@ in {
     programs.vscode = {
       enable = true;
       package = unstable.vscode;
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
       extensions = with unstable.vscode-extensions; [
         alefragnani.bookmarks
         jebbs.plantuml
@@ -183,6 +189,12 @@ in {
         zainchen.json
         zxh404.vscode-proto3
       ];
+      userSettings = {
+        "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+        "gitlens.codeLens.enabled" = false;
+        "gitlens.statusBar.enabled" = false;
+        "update.showReleaseNotes" = false;
+      };
     };
 
     # Hyprland config
@@ -198,9 +210,8 @@ in {
         exec-once = [
           "dunst &"
           "waybar &"
-          "swaybg &"
+          # "swaybg &"
           # "hyprpm reload -n"  # TODO fix
-          # "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
         ];
         env = [
           "XCURSOR_SIZE,24"
@@ -211,6 +222,7 @@ in {
           "WLR_NO_HARDWARE_CURSORS,1"
           "QT_QPA_PLATFORM,wayland"
           "QT_SCALE_FACTOR,1.2"
+          "NIXOS_OZONE_WL,1"
         ];
         input = {
           kb_layout = "us,ua";
@@ -282,37 +294,27 @@ in {
           "$mainMod, R, exec, $appLauncher"
           "$mainMod, P, pseudo,"  # dwindle
           "$mainMod, J, togglesplit,"  # dwindle
-          # Move focus with mainMod + arrow keys
+          # Move focus with mainMod+arrow keys
           "$mainMod, left, movefocus, l"
           "$mainMod, right, movefocus, r"
           "$mainMod, up, movefocus, u"
           "$mainMod, down, movefocus, d"
-          # Switch workspaces with mainMod + [0-9]
-          #  "$mainMod, 1, workspace, 1"
-          #  "$mainMod, 2, workspace, 2"
-          #  "$mainMod, 3, workspace, 3"
-          #  "$mainMod, 4, workspace, 4"
-          #  "$mainMod, 5, workspace, 5"
-          #  "$mainMod, 6, workspace, 6"
-          #  "$mainMod, 7, workspace, 7"
-          #  "$mainMod, 8, workspace, 8"
-          #  "$mainMod, 9, workspace, 9"
-          #  "$mainMod, 0, workspace, 10"
-          # Move active window to a workspace with mainMod + SHIFT + [0-9]
-          #  "$mainMod SHIFT, 1, movetoworkspace, 1"
-          #  "$mainMod SHIFT, 2, movetoworkspace, 2"
-          #  "$mainMod SHIFT, 3, movetoworkspace, 3"
-          #  "$mainMod SHIFT, 4, movetoworkspace, 4"
-          #  "$mainMod SHIFT, 5, movetoworkspace, 5"
-          #  "$mainMod SHIFT, 6, movetoworkspace, 6"
-          #  "$mainMod SHIFT, 7, movetoworkspace, 7"
-          #  "$mainMod SHIFT, 8, movetoworkspace, 8"
-          #  "$mainMod SHIFT, 9, movetoworkspace, 9"
-          #  "$mainMod SHIFT, 0, movetoworkspace, 10"
+          # Switch workspaces with mainMod+[1,5]
+          "$mainMod, 1, workspace, 1"
+          "$mainMod, 2, workspace, 2"
+          "$mainMod, 3, workspace, 3"
+          "$mainMod, 4, workspace, 4"
+          "$mainMod, 5, workspace, 5"
+          # Move active window to a workspace with mainMod+SHIFT+[1,5]
+          "$mainMod SHIFT, 1, movetoworkspace, 1"
+          "$mainMod SHIFT, 2, movetoworkspace, 2"
+          "$mainMod SHIFT, 3, movetoworkspace, 3"
+          "$mainMod SHIFT, 4, movetoworkspace, 4"
+          "$mainMod SHIFT, 5, movetoworkspace, 5"
           # Example special workspace (scratchpad)
           "$mainMod, S, togglespecialworkspace, magic"
           "$mainMod SHIFT, S, movetoworkspace, special:magic"
-          # Scroll through existing workspaces with mainMod + scroll
+          # Scroll through existing workspaces with mainMod+scroll
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
         ];
@@ -362,23 +364,8 @@ in {
   # accidentally delete configuration.nix.
   system.copySystemConfiguration = true;
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "23.11"; # Did you read the comment?
+  # The state version is required and should stay at the version that was originally installed. [2]
+  system.stateVersion = "23.11";
 
   # TODO enable when a by-number param is available
   # https://github.com/NixOS/nix/issues/9455
@@ -390,13 +377,12 @@ in {
   #   options = "--delete-older-than 7d";
   # };
 
-  programs.xwayland.enable = false;
-  security.polkit.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # TODO fix hyprpm errors
   # TODO fix vlc pixelation & hangs
   # TODO add language switching
   # TODO setup smb file sharing
   # TODO fix cross-program links
 }
+
+# [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
+# [2]: https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
