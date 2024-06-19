@@ -158,6 +158,7 @@ in {
       nodePackages.nodejs
       obs-studio
       obs-studio-plugins.wlrobs
+      unstable.obsidian
       pavucontrol
       qbittorrent
       qemu
@@ -174,6 +175,7 @@ in {
       wev
       wofi
       xdg-desktop-portal-hyprland
+      xdg-utils
     ];
 
     programs.vscode = {
@@ -190,6 +192,7 @@ in {
         zxh404.vscode-proto3
       ];
       userSettings = {
+        "editor.rulers" = [ 120 ];
         "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
         "gitlens.codeLens.enabled" = false;
         "gitlens.statusBar.enabled" = false;
@@ -259,12 +262,13 @@ in {
           enabled = true;
           bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
           animation = [
+            # NAME, ONOFF {0, 1}, SPEED {1ds = 100ms}, CURVE [,STYLE]
             "windows, 1, 7, myBezier"
             "windowsOut, 1, 7, default, popin 80%"
             "border, 1, 10, default"
             "borderangle, 1, 8, default"
             "fade, 1, 7, default"
-            "workspaces, 1, 6, default"
+            "workspaces, 1, 4, default"
           ];
         };
         # https://wiki.hyprland.org/Configuring/Dwindle-Layout
@@ -289,7 +293,7 @@ in {
           "$mainMod, Q, exec, $terminal"
           "$mainMod, C, killactive,"
           "$mainMod SHIFT, Q, exit,"
-          "$mainMod, E, exec, $fileManager"
+          # "$mainMod, E, exec, $fileManager"
           "$mainMod, V, togglefloating,"
           "$mainMod, R, exec, $appLauncher"
           "$mainMod, P, pseudo,"  # dwindle
@@ -328,6 +332,15 @@ in {
       # plugins = [
       #
       # ];
+    };
+
+    # Enable links opening across programs.
+    xdg.portal = {
+      # TODO fix telegram links
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+      config.common.default = [ "*" ];
+      xdgOpenUsePortal = true;
     };
   };
 
@@ -379,9 +392,7 @@ in {
 
   # TODO fix hyprpm errors
   # TODO fix vlc pixelation & hangs
-  # TODO add language switching
   # TODO setup smb file sharing
-  # TODO fix cross-program links
 }
 
 # [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
