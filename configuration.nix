@@ -93,6 +93,7 @@ in {
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
+    auto-optimise-store = true;  # Hardlinks unused store files on every build.
   };
   nixpkgs.config.allowUnfree = true;  # Needed for things outside of flake inputs e.g. nvidia drivers.
 
@@ -158,6 +159,11 @@ in {
       firefox
       gedit
       gimp
+      gnome.eog  # Image viewer
+      gnome.gnome-calculator
+      gnome.gnome-characters
+      gnome.gnome-font-viewer
+      gnome.gnome-system-monitor
       gnome.nautilus
       imv
       kdePackages.okular
