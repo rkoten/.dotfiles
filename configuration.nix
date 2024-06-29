@@ -2,15 +2,24 @@
 # https://search.nixos.org/packages
 # nixos-help
 
-{ config, flakeInputs, lib, pkgs, ... }:
+{ config, currentSystem, flakeInputs, lib, ... }:
 
 let
-  # Why `nixos-unstable` and not `nixpkgs-unstable` like in flakeInputs? TODO figure out.
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  pkgs = import flakeInputs.nixpkgs {
+    system = currentSystem;
+    config = {
+      allowUnfree = true;
+      joypixels.acceptLicense = true;
+    };
+  };
+  unstable = import flakeInputs.nixpkgs-unstable {
+    system = currentSystem;
+    config.allowUnfree = true;
+  };
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    #./wireguard.nix
+    # ./wireguard.nix
     <home-manager/nixos>
   ];
 
@@ -85,10 +94,10 @@ in {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };
+  nixpkgs.config.allowUnfree = true;  # Needed for things outside of flake inputs e.g. nvidia drivers.
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    joypixels.acceptLicense = true;
+  environment.sessionVariables = {
+    NIXOS_CONFIG = "/etc/nixos/configuration.nix";
   };
 
   environment.systemPackages = with pkgs; [
@@ -140,7 +149,7 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
-  home-manager.users.rm = { pkgs, ... }: {
+  home-manager.users.rm = { ... }: {
     home.packages = with pkgs; [
       discord
       docker
@@ -326,8 +335,8 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
       };
-      plugins = [
-        flakeInputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+      plugins = with pkgs; [
+        hyprlandPlugins.hyprbars
       ];
     };
 
