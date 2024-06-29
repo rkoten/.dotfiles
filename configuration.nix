@@ -61,6 +61,8 @@ in {
     pulse.enable = true;
   };
 
+  services.udisks2.enable = true;  # Needed to enable auto-mounting storage devices.
+
   security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -142,7 +144,9 @@ in {
       firefox
       gedit
       gimp
+      gnome.nautilus
       imv
+      kdePackages.okular
       kitty
       libreoffice
       mc
@@ -158,7 +162,6 @@ in {
       shotman
       slurp
       spotify
-      swaybg
       unstable.telegram-desktop
       vlc
       unstable.vscode
@@ -204,8 +207,6 @@ in {
         exec-once = [
           "dunst &"
           "waybar &"
-          # "swaybg &"
-          # "hyprpm reload -n"  # TODO fix
         ];
         env = [
           "XCURSOR_SIZE,24"
@@ -217,6 +218,7 @@ in {
           "QT_QPA_PLATFORM,wayland"
           "QT_SCALE_FACTOR,1.2"
           "NIXOS_OZONE_WL,1"
+          "GTK_THEME,Adwaita:dark"
         ];
         input = {
           kb_layout = "us,ua";
@@ -277,14 +279,14 @@ in {
         # See https://wiki.hyprland.org/Configuring/Window-Rules for more
         "$mainMod" = "SUPER";
         "$appLauncher" = "wofi --show drun";
-        "$fileManager" = "mc";
+        "$fileManager" = "nautilus";
         "$terminal" = "kitty";
         # https://wiki.hyprland.org/Configuring/Binds
         bind = [
           "$mainMod, Q, exec, $terminal"
           "$mainMod, C, killactive,"
           "$mainMod SHIFT, Q, exit,"
-          # "$mainMod, E, exec, $fileManager"
+          "$mainMod, E, exec, $fileManager"
           "$mainMod, V, togglefloating,"
           "$mainMod, R, exec, $appLauncher"
           "$mainMod, P, pseudo,"  # dwindle
@@ -319,7 +321,12 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
       };
+      plugins = with pkgs; [
+        hyprlandPlugins.hyprbars
+      ];
     };
+
+    services.udiskie.enable = true;  # Requires system-level `services.udisks2.enable` set to true.
 
     # Enable links opening across programs.
     xdg.portal = {
@@ -328,6 +335,11 @@ in {
       extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
       config.common.default = [ "*" ];  # TODO there's probably a more granular working setup
       xdgOpenUsePortal = true;
+    };
+
+    gtk = {
+      enable = true;
+      gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     };
 
     # The state version is required and should stay at the version that was originally installed.
