@@ -209,16 +209,16 @@ in {
           "waybar &"
         ];
         env = [
-          "XCURSOR_SIZE,24"
-          "LIBVA_DRIVER_NAME,nvidia"
-          "XDG_SESSION_TYPE,wayland"
           "GBM_BACKEND,nvidia-drm"
+          "GTK_THEME,Adwaita:dark"
           "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-          "WLR_NO_HARDWARE_CURSORS,1"
+          "LIBVA_DRIVER_NAME,nvidia"
+          "NIXOS_OZONE_WL,1"
           "QT_QPA_PLATFORM,wayland"
           "QT_SCALE_FACTOR,1.2"
-          "NIXOS_OZONE_WL,1"
-          "GTK_THEME,Adwaita:dark"
+          "WLR_NO_HARDWARE_CURSORS,1"
+          "XCURSOR_SIZE,24"
+          "XDG_SESSION_TYPE,wayland"
         ];
         input = {
           kb_layout = "us,ua";
@@ -335,11 +335,6 @@ in {
       extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
       config.common.default = [ "*" ];  # TODO there's probably a more granular working setup
       xdgOpenUsePortal = true;
-    };
-
-    gtk = {
-      enable = true;
-      gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     };
 
     # The state version is required and should stay at the version that was originally installed.
