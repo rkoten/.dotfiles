@@ -10,11 +10,14 @@ let
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
+    #./wireguard.nix
     <home-manager/nixos>
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   # Covered by hardware config.
   # swapDevices = [ { label = "swap"; } ];
@@ -27,25 +30,11 @@ in {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  time.timeZone = "America/New_York";
-  time.hardwareClockInLocalTime = true;  # Fixes time issues when dual-booting with Windows.
+  time = {
+    timeZone = "America/New_York";
+    hardwareClockInLocalTime = true;  # Fixes time issues when dual-booting with Windows.
+  };
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Nvidia config
   hardware.opengl = {
@@ -53,7 +42,7 @@ in {
     driSupport = true;
     driSupport32Bit = true;
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -69,10 +58,13 @@ in {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
+    jack.enable = false;
     pulse.enable = true;
-    jack.enable = true;
   };
 
+  services.udisks2.enable = true;  # Needed to enable auto-mounting storage devices.
+
+  security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       enable = true;
@@ -104,12 +96,18 @@ in {
     dconf
     freeglut
     git
+    glibc
+    gmp
     gnumake
+    gnupg
     libexecinfo
     libgcc
     libglvnd
+    libmpc
+    libxcrypt
     mesa
     meson
+    mpfr
     ninja
     nvidia-vaapi-driver
     p7zip
@@ -123,6 +121,7 @@ in {
     wayland
     wev
     wget
+    wireguard-tools
     wireplumber
     wl-clipboard-x11
     xwayland
@@ -132,16 +131,16 @@ in {
     isNormalUser = true;
     extraGroups = [
       "audio"
+      "networkmanager"  # Grants permission to change network settings. [1]
       "wheel"  # Enable sudo for the user.
     ];
   };
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
   home-manager.users.rm = { pkgs, ... }: {
-    # The state version is required and should stay at the version that was originally installed.
-    home.stateVersion = "23.11";
-
     home.packages = with pkgs; [
       discord
       docker
@@ -149,86 +148,102 @@ in {
       emote
       firefox
       gedit
-      unstable.hyprland
+      gimp
+      gnome.nautilus
       imv
+      kdePackages.okular
       kitty
+      libreoffice
       mc
+      nodePackages.nodejs
       obs-studio
       obs-studio-plugins.wlrobs
+      unstable.obsidian
+      pavucontrol
       qbittorrent
       qemu
+      qgis
       qt6.qtwayland
       shotman
       slurp
       spotify
-      swaybg
-      telegram-desktop
+      unstable.telegram-desktop
       vlc
-      vscode
-      waybar
+      unstable.vscode
+      unstable.waybar
+      wev
       wofi
       xdg-desktop-portal-hyprland
+      xdg-utils
     ];
+
+    programs.vscode = {
+      enable = true;
+      package = unstable.vscode;
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
+      extensions = with unstable.vscode-extensions; [
+        alefragnani.bookmarks
+        jebbs.plantuml
+        jnoortheen.nix-ide
+        ms-vscode.hexeditor
+        zainchen.json
+        zxh404.vscode-proto3
+      ];
+      userSettings = {
+        "editor.rulers" = [ 120 ];
+        "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+        "gitlens.codeLens.enabled" = false;
+        "gitlens.statusBar.enabled" = false;
+        "update.showReleaseNotes" = false;
+      };
+    };
 
     # Hyprland config
     wayland.windowManager.hyprland = {
       enable = true;
-      package = unstable.hyprland;
+      package = pkgs.hyprland;
       systemd.enable = true;
       xwayland.enable = true;
-
       settings = {
-        # See https://wiki.hyprland.org/Configuring/Monitors/
-        monitor = ",preferred,auto,auto";
-
-        # See https://wiki.hyprland.org/Configuring/Keywords/ for more
-
+        # https://wiki.hyprland.org/Configuring/Keywords
+        # https://wiki.hyprland.org/Configuring/Variables
+        monitor = ",preferred,auto,auto";  # https://wiki.hyprland.org/Configuring/Monitors
         exec-once = [
           "dunst &"
           "waybar &"
-          "swaybg &"
-          # "hyprpm reload -n"  # TODO fix hyprpm update
-          # "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
         ];
-
-        # Source a file (multi-file configs)
-        # source = ~/.config/hypr/myColors.conf
-
-        # Some default env vars.
         env = [
-          "XCURSOR_SIZE,24"
-          "LIBVA_DRIVER_NAME,nvidia"
-          "XDG_SESSION_TYPE,wayland"
           "GBM_BACKEND,nvidia-drm"
+          "GTK_THEME,Adwaita:dark"
           "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+          "LIBVA_DRIVER_NAME,nvidia"
+          "NIXOS_OZONE_WL,1"
+          "QT_QPA_PLATFORM,wayland"
+          "QT_SCALE_FACTOR,1.2"
           "WLR_NO_HARDWARE_CURSORS,1"
+          "XCURSOR_SIZE,24"
+          "XDG_SESSION_TYPE,wayland"
         ];
-
-        # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
         input = {
-          kb_layout = "us";
-          kb_variant = "";
+          kb_layout = "us,ua";
+          kb_options = "grp:win_space_toggle";
           kb_model = "";
-          kb_options = "";
           kb_rules = "";
+          kb_variant = "";
           follow_mouse = 1;
-          sensitivity = -0.5;  # [-1.0, 1.0], 0 means no modification.
+          sensitivity = -0.5;  # [-1.0, 1.0]; 0 means no modification.
         };
-
         general = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
           gaps_in = 5;
           gaps_out = 20;
           border_size = 2;
           "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
           layout = "dwindle";
-          # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-          allow_tearing = false;
+          allow_tearing = false;  # https://wiki.hyprland.org/Configuring/Tearing
         };
-
         decoration = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
           rounding = 10;
           blur = {
             enabled = true;
@@ -240,56 +255,39 @@ in {
           shadow_render_power = 3;
           "col.shadow" = "rgba(1a1a1aee)";
         };
-
+        # https://wiki.hyprland.org/Configuring/Animations
         animations = {
           enabled = true;
-          # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
           bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
           animation = [
+            # NAME, ONOFF {0, 1}, SPEED {1ds = 100ms}, CURVE [,STYLE]
             "windows, 1, 7, myBezier"
             "windowsOut, 1, 7, default, popin 80%"
             "border, 1, 10, default"
             "borderangle, 1, 8, default"
             "fade, 1, 7, default"
-            "workspaces, 1, 6, default"
+            "workspaces, 1, 4, default"
           ];
         };
-
+        # https://wiki.hyprland.org/Configuring/Dwindle-Layout
         dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile = true;  # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = true;  # you probably want this
+          pseudotile = true;  # Master switch for pseudotiling. Bound to mainMod+P in the keybinds section.
+          preserve_split = true;  # Recommended to enable.
         };
-
-        master = {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true;
-        };
-
-        gestures = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = false;
-        };
-
-        misc = {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          force_default_wallpaper = 0;  # Disables the anime mascot wallpapers.
-        };
-
+        master.new_status = "master";  # https://wiki.hyprland.org/Configuring/Master-Layout
+        gestures.workspace_swipe = false;
+        misc.force_default_wallpaper = 0;  # Disables the anime mascot wallpapers.
         # Example windowrule v1
         # windowrule = float, ^(kitty)$
         # Example windowrule v2
         # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-        # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-
-        # See https://wiki.hyprland.org/Configuring/Keywords/ for more
+        # See https://wiki.hyprland.org/Configuring/Window-Rules for more
         "$mainMod" = "SUPER";
         "$appLauncher" = "wofi --show drun";
-        "$fileManager" = "mc";
+        "$fileManager" = "nautilus";
         "$terminal" = "kitty";
-
+        # https://wiki.hyprland.org/Configuring/Binds
         bind = [
-          # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
           "$mainMod, Q, exec, $terminal"
           "$mainMod, C, killactive,"
           "$mainMod SHIFT, Q, exit,"
@@ -298,58 +296,54 @@ in {
           "$mainMod, R, exec, $appLauncher"
           "$mainMod, P, pseudo,"  # dwindle
           "$mainMod, J, togglesplit,"  # dwindle
-
-          # Move focus with mainMod + arrow keys
+          # Move focus with mainMod+arrow keys
           "$mainMod, left, movefocus, l"
           "$mainMod, right, movefocus, r"
           "$mainMod, up, movefocus, u"
           "$mainMod, down, movefocus, d"
-
-        # Switch workspaces with mainMod + [0-9]
-        #  "$mainMod, 1, workspace, 1"
-        #  "$mainMod, 2, workspace, 2"
-        #  "$mainMod, 3, workspace, 3"
-        #  "$mainMod, 4, workspace, 4"
-        #  "$mainMod, 5, workspace, 5"
-        #  "$mainMod, 6, workspace, 6"
-        #  "$mainMod, 7, workspace, 7"
-        #  "$mainMod, 8, workspace, 8"
-        #  "$mainMod, 9, workspace, 9"
-        #  "$mainMod, 0, workspace, 10"
-
-        # Move active window to a workspace with mainMod + SHIFT + [0-9]
-        #  "$mainMod SHIFT, 1, movetoworkspace, 1"
-        #  "$mainMod SHIFT, 2, movetoworkspace, 2"
-        #  "$mainMod SHIFT, 3, movetoworkspace, 3"
-        #  "$mainMod SHIFT, 4, movetoworkspace, 4"
-        #  "$mainMod SHIFT, 5, movetoworkspace, 5"
-        #  "$mainMod SHIFT, 6, movetoworkspace, 6"
-        #  "$mainMod SHIFT, 7, movetoworkspace, 7"
-        #  "$mainMod SHIFT, 8, movetoworkspace, 8"
-        #  "$mainMod SHIFT, 9, movetoworkspace, 9"
-        #  "$mainMod SHIFT, 0, movetoworkspace, 10"
-
-        # Example special workspace (scratchpad)
+          # Switch workspaces with mainMod+[1,5]
+          "$mainMod, 1, workspace, 1"
+          "$mainMod, 2, workspace, 2"
+          "$mainMod, 3, workspace, 3"
+          "$mainMod, 4, workspace, 4"
+          "$mainMod, 5, workspace, 5"
+          # Move active window to a workspace with mainMod+SHIFT+[1,5]
+          "$mainMod SHIFT, 1, movetoworkspace, 1"
+          "$mainMod SHIFT, 2, movetoworkspace, 2"
+          "$mainMod SHIFT, 3, movetoworkspace, 3"
+          "$mainMod SHIFT, 4, movetoworkspace, 4"
+          "$mainMod SHIFT, 5, movetoworkspace, 5"
+          # Example special workspace (scratchpad)
           "$mainMod, S, togglespecialworkspace, magic"
           "$mainMod SHIFT, S, movetoworkspace, special:magic"
-
-        # Scroll through existing workspaces with mainMod + scroll
+          # Scroll through existing workspaces with mainMod+scroll
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
         ];
-
         # Move/resize windows with mainMod + LMB/RMB and dragging
         bindm = [
           "$mainMod, mouse:272, movewindow"
           "$mainMod, mouse:273, resizewindow"
         ];
       };
-
       plugins = [
         flakeInputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
-        "${flakeInputs.hy3.packages.${pkgs.system}.hy3}/lib/libhy3.so"
       ];
     };
+
+    services.udiskie.enable = true;  # Requires system-level `services.udisks2.enable` set to true.
+
+    # Enable links opening across programs.
+    xdg.portal = {
+      # TODO fix telegram links
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+      config.common.default = [ "*" ];  # TODO there's probably a more granular working setup
+      xdgOpenUsePortal = true;
+    };
+
+    # The state version is required and should stay at the version that was originally installed.
+    home.stateVersion = "23.11";
   };
 
   fonts.packages = with pkgs; [
@@ -364,37 +358,40 @@ in {
     vistafonts  # Consolas <3
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  # TODO cachix
+  # nix.settings = {
+  #   substituters = [];
+  # }
+
+  # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
+  # Copies the NixOS configuration file and links it from the resulting system (/run/current-system/configuration.nix).
+  # This is useful in case configuration.nix is accidentally deleted.
   system.copySystemConfiguration = true;
 
-  # The state version is required and should stay at the version that was originally installed.
-  # https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+  # The state version is required and should stay at the version that was originally installed. [2]
   system.stateVersion = "23.11";
 
-  programs.xwayland.enable = false;
-  security.polkit.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # TODO enable when a by-number param is available
+  # https://github.com/NixOS/nix/issues/9455
+  # https://github.com/NixOS/nix/pull/10426
+  # nix.gc = {
+  #   automatic = true;
+  #   persistent = true;
+  #   dates = "05:00:00";
+  #   options = "--delete-older-than 7d";
+  # };
 
-  # TODO figure out polkit agent
-  # TODO fix hyprpm errors
+  # TODO fix vlc pixelation & hangs
+  # TODO setup smb file sharing
 }
 
+# [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
+# [2]: https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion

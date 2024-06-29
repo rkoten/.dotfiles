@@ -1,0 +1,54 @@
+* {
+    border: none;
+    font-family: Font Awesome, Roboto, Arial, sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 0px 8px;
+    border-radius: 20px;
+}
+window#waybar {
+    background: rgba(0, 0, 0, 0);
+}
+
+.modules-right {
+    background-color: rgba(0, 43, 51, 0.85);
+    margin: 2px 4px 0 0;
+}
+.modules-center {
+    background-color: rgba(0, 43, 51, 0.85);
+    margin: 2px 0 0 0;
+}
+.modules-left {
+    margin: 2px 0 0 4px;
+    background-color: rgba(0, 43, 51, 0.85);
+}
+
+#workspaces button {
+    background-color: transparent;
+}
+#workspaces button:hover {
+    /* TODO fix appearance */
+    background-color: rgba(0, 96, 96, 0.85);
+}
+#workspaces button.focused {
+    border: rgba(255, 255, 255, 0.85);
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+#idle_inhibitor.activated {
+    color: #2dcc36;
+}
+#pulseaudio.muted {
+    color: #cc3436;
+}
+#submap {
+    color: #cc3436;
+    font-weight: bold;
+}
+
+/*
+#window {
+    font-weight: bold;
+}
+*/
