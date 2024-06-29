@@ -16,8 +16,8 @@
   },
   "network": {
     "interface": "wg0",
-    "format-ethernet": "{ifname}: up ",
-    "format-disconnected": "{ifname}: down ⚠",
+    "format-ethernet": "wg0: up ",
+    "format-disconnected": "wg0: down ⚠",
     "interval" : 5,
   },
   "pulseaudio": {

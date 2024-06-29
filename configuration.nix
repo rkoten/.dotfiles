@@ -9,12 +9,14 @@ let
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    ./wireguard.nix
+    #./wireguard.nix
     <home-manager/nixos>
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
 
   # Covered by hardware config.
   # swapDevices = [ { label = "swap"; } ];
@@ -27,25 +29,11 @@ in {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-  time.timeZone = "America/New_York";
-  time.hardwareClockInLocalTime = true;  # Fixes time issues when dual-booting with Windows.
+  time = {
+    timeZone = "America/New_York";
+    hardwareClockInLocalTime = true;  # Fixes time issues when dual-booting with Windows.
+  };
   i18n.defaultLocale = "en_US.UTF-8";
-
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Nvidia config
   hardware.opengl = {
@@ -105,11 +93,16 @@ in {
     dconf
     freeglut
     git
+    glibc
+    gmp
     gnumake
     gnupg
     libgcc
+    libmpc
+    libxcrypt
     mesa
     meson
+    mpfr
     ninja
     nvidia-vaapi-driver
     p7zip
@@ -136,12 +129,11 @@ in {
     ];
   };
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
   home-manager.users.rm = { pkgs, ... }: {
-    # The state version is required and should stay at the version that was originally installed.
-    home.stateVersion = "23.11";
-
     home.packages = with pkgs; [
       discord
       docker
@@ -150,7 +142,6 @@ in {
       firefox
       gedit
       gimp
-      unstable.hyprland
       imv
       kitty
       libreoffice
@@ -203,7 +194,7 @@ in {
     # Hyprland config
     wayland.windowManager.hyprland = {
       enable = true;
-      package = unstable.hyprland;
+      package = pkgs.hyprland;
       systemd.enable = true;
       xwayland.enable = true;
       settings = {
@@ -276,14 +267,14 @@ in {
           pseudotile = true;  # Master switch for pseudotiling. Bound to mainMod+P in the keybinds section.
           preserve_split = true;  # Recommended to enable.
         };
-        master.new_is_master = true;  # https://wiki.hyprland.org/Configuring/Master-Layout
+        master.new_status = "master";  # https://wiki.hyprland.org/Configuring/Master-Layout
         gestures.workspace_swipe = false;
         misc.force_default_wallpaper = 0;  # Disables the anime mascot wallpapers.
         # Example windowrule v1
         # windowrule = float, ^(kitty)$
         # Example windowrule v2
         # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-        # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+        # See https://wiki.hyprland.org/Configuring/Window-Rules for more
         "$mainMod" = "SUPER";
         "$appLauncher" = "wofi --show drun";
         "$fileManager" = "mc";
@@ -328,10 +319,6 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
       };
-      # TODO
-      # plugins = [
-      #
-      # ];
     };
 
     # Enable links opening across programs.
@@ -339,9 +326,12 @@ in {
       # TODO fix telegram links
       enable = true;
       extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-      config.common.default = [ "*" ];
+      config.common.default = [ "*" ];  # TODO there's probably a more granular working setup
       xdgOpenUsePortal = true;
     };
+
+    # The state version is required and should stay at the version that was originally installed.
+    home.stateVersion = "23.11";
   };
 
   fonts.packages = with pkgs; [
@@ -361,20 +351,17 @@ in {
   #   substituters = [];
   # }
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  # Some programs need SUID wrappers, can be configured further or are started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
   # services.openssh.enable = true;
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
+  # Copies the NixOS configuration file and links it from the resulting system (/run/current-system/configuration.nix).
+  # This is useful in case configuration.nix is accidentally deleted.
   system.copySystemConfiguration = true;
 
   # The state version is required and should stay at the version that was originally installed. [2]
@@ -390,7 +377,6 @@ in {
   #   options = "--delete-older-than 7d";
   # };
 
-  # TODO fix hyprpm errors
   # TODO fix vlc pixelation & hangs
   # TODO setup smb file sharing
 }
