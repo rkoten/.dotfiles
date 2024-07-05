@@ -45,6 +45,7 @@
   #   Adds executable packages to the nix-shell environment. [2]
   packages = with pkgs; [
     cmake
+    gnome.eog
     gnumake
     libgcc
     pavucontrol
@@ -55,7 +56,6 @@
   shellHook = "";
 
   LD_LIBRARY_PATH = "${pkgs.libglvnd}/lib";
-  # OPENGL_gles3_LIBRARY = "${pkgs.libglvnd}/lib";
 }
 
 # [1]: https://discourse.nixos.org/t/use-buildinputs-or-nativebuildinputs-for-nix-shell/8464
