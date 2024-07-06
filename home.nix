@@ -10,6 +10,18 @@ let
     config.allowUnfree = true;
   };
 in {
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+  ];
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      # Include per-user hm-session-vars.sh if it exists.
+      [[ -f /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh ]] &&
+      source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+    '';
+  };
+
   home.packages = with pkgs; [
     discord
     docker
