@@ -23,10 +23,24 @@ in {
   };
 
   home.packages = with pkgs; [
-    discord
-    docker
+    # Dev packages
+    nodePackages.nodejs
+    protobuf
+    protoc-gen-validate
+
+    # Env packages
     dunst
-    emote
+    pavucontrol
+    playerctl
+    shotman
+    slurp
+    unstable.waybar
+    wofi
+    xdg-desktop-portal-hyprland
+    xdg-utils
+
+    # User packages
+    discord
     firefox
     gedit
     gimp
@@ -41,30 +55,19 @@ in {
     kitty
     libreoffice
     mc
-    nodePackages.nodejs
     obs-studio
     obs-studio-plugins.wlrobs
     unstable.obsidian
-    pavucontrol
-    playerctl
-    protobuf
     qbittorrent
     qemu
     qgis
     qt6.qtwayland
-    shotman
-    slurp
     sparrow
     spotify
     unstable.telegram-desktop
     vlc
     ungoogled-chromium
     unstable.vscode
-    unstable.waybar
-    wev
-    wofi
-    xdg-desktop-portal-hyprland
-    xdg-utils
   ];
 
   programs.vscode = {

@@ -128,7 +128,6 @@ in {
     tree
     udis86
     wayland
-    wev
     wget
     wireguard-tools
     wireplumber
