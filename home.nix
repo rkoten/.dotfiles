@@ -36,8 +36,8 @@ in {
     gnome.gnome-font-viewer
     gnome.gnome-system-monitor
     gnome.nautilus
-    imv
     kdePackages.okular
+    keepass
     kitty
     libreoffice
     mc
@@ -47,15 +47,18 @@ in {
     unstable.obsidian
     pavucontrol
     playerctl
+    protobuf
     qbittorrent
     qemu
     qgis
     qt6.qtwayland
     shotman
     slurp
+    sparrow
     spotify
     unstable.telegram-desktop
     vlc
+    ungoogled-chromium
     unstable.vscode
     unstable.waybar
     wev

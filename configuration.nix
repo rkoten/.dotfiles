@@ -157,6 +157,11 @@ in {
     vistafonts  # Consolas <3
   ];
 
+  # TODO fix local mDNS discovery
+  # services.avahi = {
+  #   enable = true;
+  # };
+
   # TODO cachix
   # nix.settings = {
   #   substituters = [];
