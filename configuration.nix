@@ -109,6 +109,7 @@ in {
     gmp
     gnumake
     gnupg
+    inetutils
     libexecinfo
     libgcc
     libglvnd
@@ -139,6 +140,7 @@ in {
     isNormalUser = true;
     extraGroups = [
       "audio"
+      "docker"  # Enables interaction with the docker daemon.
       "networkmanager"  # Grants permission to change network settings. [1]
       "wheel"  # Enable sudo for the user.
     ];
@@ -155,6 +157,8 @@ in {
     noto-fonts-cjk  # Asian languages support
     vistafonts  # Consolas <3
   ];
+
+  virtualisation.docker.enable = true;
 
   # TODO fix local mDNS discovery
   # services.avahi = {

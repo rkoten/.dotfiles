@@ -65,6 +65,7 @@ in {
     sparrow
     spotify
     unstable.telegram-desktop
+    tldr
     vlc
     ungoogled-chromium
     unstable.vscode
