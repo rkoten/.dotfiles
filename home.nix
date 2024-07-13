@@ -52,7 +52,6 @@ in {
     gnome.nautilus
     kdePackages.okular
     keepass
-    kitty
     libreoffice
     mc
     obs-studio
@@ -71,6 +70,21 @@ in {
     unstable.vscode
   ];
 
+  programs.kitty = {
+    enable = true;
+    settings = {
+      scrollback_lines = 31337;
+      tab_bar_style = "slant";
+
+      # TODO fix applying cursor shape without breaking shell integration
+      cursor_shape = "block";
+      # shell_integration = "enabled no-cursor";  # Disables cursor shape override by shell integration.
+
+      enable_audio_bell = false;
+      visual_bell_duration = "0.15";
+    };
+  };
+
   programs.vscode = {
     enable = true;
     package = unstable.vscode;
@@ -85,11 +99,16 @@ in {
       zxh404.vscode-proto3
     ];
     userSettings = {
+      # Core
       "editor.rulers" = [ 120 ];
       "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+      "files.trimTrailingWhitespace" = true;
+      "update.showReleaseNotes" = false;
+
+      # Plugins
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
-      "update.showReleaseNotes" = false;
+      "solidity.telemetry" = false;
     };
   };
 
