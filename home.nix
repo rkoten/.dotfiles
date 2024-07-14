@@ -50,6 +50,7 @@ in {
     gnome.gnome-font-viewer
     gnome.gnome-system-monitor
     gnome.nautilus
+    hyprshade  # TODO configure https://github.com/loqusion/hyprshade
     kdePackages.okular
     keepass
     kitty
@@ -203,26 +204,27 @@ in {
         "SUPER, right, movefocus, r"
         "SUPER, up, movefocus, u"
         "SUPER, down, movefocus, d"
-        # Switch workspaces with super+[1,5]
-        "SUPER, 1, workspace, 1"
-        "SUPER, 2, workspace, 2"
-        "SUPER, 3, workspace, 3"
-        "SUPER, 4, workspace, 4"
-        "SUPER, 5, workspace, 5"
-        # Move active window to a workspace with super+SHIFT+[1,5]
-        "SUPER SHIFT, 1, movetoworkspace, 1"
-        "SUPER SHIFT, 2, movetoworkspace, 2"
-        "SUPER SHIFT, 3, movetoworkspace, 3"
-        "SUPER SHIFT, 4, movetoworkspace, 4"
-        "SUPER SHIFT, 5, movetoworkspace, 5"
         # Example special workspace (scratchpad)
         "SUPER, S, togglespecialworkspace, magic"
         "SUPER SHIFT, S, movetoworkspace, special:magic"
         # Scroll through existing workspaces with super+scroll
         "SUPER, mouse_down, workspace, e+1"
         "SUPER, mouse_up, workspace, e-1"
-      ];
-      # Bind flags [3]:
+      ] ++ (
+        builtins.concatLists(
+          builtins.genList(
+            x: let
+              ws = builtins.toString(x+1);
+              key = builtins.toString(if x+1 < 10 then x+1 else 0);
+            in [
+              "SUPER, ${key}, workspace, ${ws}"
+              "SUPER SHIFT, ${key}, movetoworkspace, ${ws}"
+            ]
+          )
+          10
+        )
+      );
+      # Bind flags [1]:
       # l -> locked, will also work when an input inhibitor (e.g. a lockscreen) is active.
       # r -> release, will trigger on release of a key.
       # e -> repeat, will repeat when held.
@@ -266,3 +268,5 @@ in {
   # The state version is required and should stay at the version that was originally installed.
   home.stateVersion = "23.11";
 }
+
+# [1]: TODO hypr wiki Binds entry

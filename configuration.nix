@@ -92,7 +92,7 @@ in {
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store = true;  # Hardlinks unused store files on every build.
+    auto-optimise-store = true;  # Replaces identical store files with hard links on every build.
   };
   nixpkgs.config.allowUnfree = true;  # Needed for things outside of flake inputs e.g. nvidia drivers.
 
@@ -135,6 +135,20 @@ in {
     wl-clipboard-x11
     xwayland
   ];
+
+  programs.nix-ld = {
+    enable = true;
+    package = pkgs.nix-ld-rs;
+    libraries = with pkgs; [
+      # https://github.com/Mic92/dotfiles/blob/main/nixos/modules/nix-ld.nix
+      # https://unix.stackexchange.com/a/522823
+      stdenv.cc.cc
+      glibc
+      libcxx
+      libelf
+      libgcrypt
+    ];
+  };
 
   users.users.rm = {
     isNormalUser = true;
@@ -202,4 +216,3 @@ in {
 
 # [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
 # [2]: https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
-# [3]: https://wiki.hyprland.org/Configuring/Binds
