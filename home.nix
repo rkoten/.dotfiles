@@ -121,7 +121,11 @@ in {
     settings = {
       # https://wiki.hyprland.org/Configuring/Keywords
       # https://wiki.hyprland.org/Configuring/Variables
-      monitor = ",preferred,auto,auto";  # https://wiki.hyprland.org/Configuring/Monitors
+      monitor = [
+        # https://wiki.hyprland.org/Configuring/Monitors
+        ",preferred,auto,auto"
+        "Unknown-1,disable"
+      ];
       exec-once = [
         "dunst &"
         "waybar &"
