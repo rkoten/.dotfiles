@@ -52,6 +52,7 @@ in {
     gnome.nautilus
     kdePackages.okular
     keepass
+    kitty
     libreoffice
     mc
     obs-studio
@@ -69,21 +70,6 @@ in {
     ungoogled-chromium
     unstable.vscode
   ];
-
-  programs.kitty = {
-    enable = true;
-    settings = {
-      scrollback_lines = 31337;
-      tab_bar_style = "slant";
-
-      # TODO fix applying cursor shape without breaking shell integration
-      cursor_shape = "block";
-      # shell_integration = "enabled no-cursor";  # Disables cursor shape override by shell integration.
-
-      enable_audio_bell = false;
-      visual_bell_duration = "0.15";
-    };
-  };
 
   programs.vscode = {
     enable = true;
