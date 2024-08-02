@@ -110,21 +110,25 @@ in {
       # https://wiki.hyprland.org/Configuring/Variables
       monitor = [
         # https://wiki.hyprland.org/Configuring/Monitors
-        ",preferred,auto,auto"
+        ",preferred,auto,1.5"
         "Unknown-1,disable"
       ];
+      xwayland = {
+        force_zero_scaling = true;
+      };
       exec-once = [
         "dunst &"
         "waybar &"
       ];
       env = [
         "GBM_BACKEND,nvidia-drm"
+        "GDK_SCALE,1.5"
         "GTK_THEME,Adwaita:dark"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "LIBVA_DRIVER_NAME,nvidia"
         "NIXOS_OZONE_WL,1"
         "QT_QPA_PLATFORM,wayland"
-        "QT_SCALE_FACTOR,1.2"
+        "QT_SCALE_FACTOR,1.5"
         "WLR_NO_HARDWARE_CURSORS,1"
         "XCURSOR_SIZE,24"
         "XDG_SESSION_TYPE,wayland"
