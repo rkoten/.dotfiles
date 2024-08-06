@@ -51,6 +51,7 @@ in {
     gnome.gnome-system-monitor
     gnome.nautilus
     hyprshade  # TODO configure https://github.com/loqusion/hyprshade
+    jetbrains.rust-rover
     kdePackages.okular
     keepass
     kitty
@@ -91,6 +92,7 @@ in {
       "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
       "files.trimTrailingWhitespace" = true;
       "update.showReleaseNotes" = false;
+      "window.zoomLevel" = 1;
 
       # Plugins
       "gitlens.codeLens.enabled" = false;
