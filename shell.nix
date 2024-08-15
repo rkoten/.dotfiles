@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }: pkgs.mkShell {
+{ pkgs ? import <nixpkgs> {} }: pkgs.mkShell rec {
   # From [3]:
   #   - If it is used at build-time it's depsBuildXXX
   #   - If it is used at run-time it's depsHostXXX.
@@ -14,9 +14,7 @@
   nativeBuildInputs = with pkgs.buildPackages; [
     cmake
     gnumake
-    # libexecinfo
     libgcc
-    # udis86
   ];
 
   # buildInputs:
@@ -25,20 +23,19 @@
   #   However, linking related variables will capture these packages (e.g. NIX_LD_FLAGS, CMAKE_PREFIX_PATH,
   #   PKG_CONFIG_PATH). [1]
   buildInputs = with pkgs.buildPackages; [
+    alsa-lib  # Advanced Linux Sound Architecture
     freeglut
     # glibc should be left out of buildInputs.
     gmp
+    hiredis  # Redis library. Apparently used to speed things up locally by some libs.
     libglvnd
+    libjack2  # JACK audio library
     libmpc
+    libstdcxx5
     libxcrypt
     mesa
     mpfr
-    # ------------- the cut line below which i have no idea if any of the listed is needed
-    # cmake
-    # gnumake
-    # libexecinfo
-    # libgcc
-    # udis86
+    zlib
   ];
 
   # packages:
@@ -53,9 +50,10 @@
 
   # shellHook:
   #   Bash statements that are executed by nix-shell. [2]
-  shellHook = "";
-
-  LD_LIBRARY_PATH = "${pkgs.libglvnd}/lib";
+  shellHook = ''
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib.outPath}/lib"
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath buildInputs}"
+  '';
 }
 
 # [1]: https://discourse.nixos.org/t/use-buildinputs-or-nativebuildinputs-for-nix-shell/8464
