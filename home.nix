@@ -82,6 +82,7 @@ in {
       alefragnani.bookmarks
       jebbs.plantuml
       jnoortheen.nix-ide
+      ms-python.python
       ms-vscode.hexeditor
       zainchen.json
       zxh404.vscode-proto3
@@ -97,6 +98,7 @@ in {
       # Plugins
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
+      "hexeditor.columnWidth" = 16;
       "solidity.telemetry" = false;
     };
   };
