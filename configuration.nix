@@ -130,7 +130,7 @@ in {
     rar
     rustup
     tree
-    udis86
+    usbutils
     wayland
     wget
     wireguard-tools

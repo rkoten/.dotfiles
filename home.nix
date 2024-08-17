@@ -55,14 +55,14 @@ in {
     kdePackages.okular
     keepass
     kitty
-    libreoffice
+    # libreoffice
     mc
     obs-studio
     obs-studio-plugins.wlrobs
     unstable.obsidian
     qbittorrent
     qemu
-    qgis
+    # qgis
     qt6.qtwayland
     sparrow
     spotify
@@ -91,6 +91,7 @@ in {
       # Core
       "editor.rulers" = [ 120 ];
       "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+      "files.insertFinalNewline" = true;
       "files.trimTrailingWhitespace" = true;
       "update.showReleaseNotes" = false;
       "window.zoomLevel" = 1;
@@ -106,7 +107,7 @@ in {
   # Hyprland config
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
+    package = unstable.hyprland;
     systemd.enable = true;
     xwayland.enable = true;
     settings = {
@@ -129,12 +130,14 @@ in {
         "GDK_SCALE,1.5"
         "GTK_THEME,Adwaita:dark"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "HYPRCURSOR_THEME,cursor_McMojave"
+        "HYPRCURSOR_SIZE,28"
         "LIBVA_DRIVER_NAME,nvidia"
         "NIXOS_OZONE_WL,1"
         "QT_QPA_PLATFORM,wayland"
         "QT_SCALE_FACTOR,1.5"
         "WLR_NO_HARDWARE_CURSORS,1"
-        "XCURSOR_SIZE,24"
+        "XCURSOR_SIZE,28"
         "XDG_SESSION_TYPE,wayland"
       ];
       input = {
@@ -258,8 +261,8 @@ in {
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
     };
-    plugins = with pkgs; [
-      hyprlandPlugins.hyprbars
+    plugins = with unstable.hyprlandPlugins; [
+      hyprbars
     ];
   };
 

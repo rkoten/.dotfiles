@@ -44,6 +44,7 @@
     cmake
     gnome.eog
     gnumake
+    htop
     libgcc
     pavucontrol
   ];
