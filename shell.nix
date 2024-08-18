@@ -23,15 +23,15 @@
   #   However, linking related variables will capture these packages (e.g. NIX_LD_FLAGS, CMAKE_PREFIX_PATH,
   #   PKG_CONFIG_PATH). [1]
   buildInputs = with pkgs.buildPackages; [
-    alsa-lib  # Advanced Linux Sound Architecture
+    alsa-lib
     freeglut
     # glibc should be left out of buildInputs.
     gmp
     hiredis  # Redis library. Apparently used to speed things up locally by some libs.
     libglvnd
-    libjack2  # JACK audio library
+    libjack2
     libmpc
-    libstdcxx5
+    # libstdcxx5 should be left out of buildInputs.
     libxcrypt
     mesa
     mpfr

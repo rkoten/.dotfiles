@@ -83,6 +83,7 @@ in {
       jebbs.plantuml
       jnoortheen.nix-ide
       ms-python.python
+      ms-vscode.cpptools
       ms-vscode.hexeditor
       zainchen.json
       zxh404.vscode-proto3
@@ -97,6 +98,8 @@ in {
       "window.zoomLevel" = 1;
 
       # Plugins
+      "C_Cpp.autocompleteAddParentheses" = true;
+      "C_Cpp.inactiveRegionOpacity" = 0.7;
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
       "hexeditor.columnWidth" = 16;
