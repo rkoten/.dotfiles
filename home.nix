@@ -85,6 +85,7 @@ in {
       ms-python.python
       ms-vscode.cpptools
       ms-vscode.hexeditor
+      twxs.cmake
       zainchen.json
       zxh404.vscode-proto3
     ];
@@ -92,14 +93,14 @@ in {
       # Core
       "editor.rulers" = [ 120 ];
       "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+      "extensions.ignoreRecommendations" = true;
       "files.insertFinalNewline" = true;
       "files.trimTrailingWhitespace" = true;
       "update.showReleaseNotes" = false;
       "window.zoomLevel" = 1;
 
       # Plugins
-      "C_Cpp.autocompleteAddParentheses" = true;
-      "C_Cpp.inactiveRegionOpacity" = 0.7;
+      "C_Cpp.inactiveRegionOpacity" = 0.65;
       "gitlens.codeLens.enabled" = false;
       "gitlens.statusBar.enabled" = false;
       "hexeditor.columnWidth" = 16;
