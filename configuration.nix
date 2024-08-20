@@ -102,6 +102,12 @@ in {
   environment.sessionVariables = {
     NIXOS_CONFIG = "/etc/nixos/configuration.nix";
   };
+  environment.shellAliases = {
+    nfu = "nix flake update";
+    nrb = "nixos-rebuild --impure";
+    nsg = "nix store gc";
+    nso = "nix store optimise";
+  };
 
   environment.systemPackages = with pkgs; [
     cmake

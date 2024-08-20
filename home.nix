@@ -1,4 +1,4 @@
-{ flakeInputs, currentSystem, ... }:
+{ flakeInputs, currentSystem, username, ... }:
 
 let
   pkgs = import flakeInputs.nixpkgs {
@@ -30,13 +30,13 @@ in {
 
     # Env packages
     dunst
+    unstable.hyprshot
     pavucontrol
     playerctl
-    shotman
-    slurp
     unstable.waybar
     wofi
     xdg-desktop-portal-hyprland
+    xdg-user-dirs
     xdg-utils
 
     # User packages
@@ -136,6 +136,7 @@ in {
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "HYPRCURSOR_THEME,cursor_McMojave"
         "HYPRCURSOR_SIZE,28"
+        "HYPRSHOT_DIR,/home/${username}/pictures/scrshots"
         "LIBVA_DRIVER_NAME,nvidia"
         "NIXOS_OZONE_WL,1"
         "QT_QPA_PLATFORM,wayland"
@@ -225,6 +226,13 @@ in {
         # Scroll through existing workspaces with super+scroll
         "SUPER, mouse_down, workspace, e+1"
         "SUPER, mouse_up, workspace, e-1"
+        # Screenshot binds
+        ", PRINT, exec, hyprshot --mode output"  # Monitor
+        "SUPER, PRINT, exec, hyprshot --mode output --clipboard-only"
+        "CTRL, PRINT, exec, hyprshot --mode window"
+        "SUPER CTRL, PRINT, exec, hyprshot --mode window --clipboard-only"
+        "SHIFT, PRINT, exec, hyprshot --mode region"
+        "SUPER SHIFT, PRINT, exec, hyprshot --mode region --clipboard-only"
       ] ++ (
         builtins.concatLists(
           builtins.genList(

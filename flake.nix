@@ -23,6 +23,7 @@
               users.rm = import ./home.nix {
                 inherit flakeInputs;
                 inherit currentSystem;
+                username = "rm";
               };
             };
           }
