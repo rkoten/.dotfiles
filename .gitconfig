@@ -17,13 +17,11 @@
     d = diff --diff-filter=d
     dfn = diff --name-only
     f = fetch
-    s = status
-    ss = status -s
-    stss = stash save
-    stsa = stash apply
-    stsd = stash drop
-    stsp = stash pop
-    stsl = stash list
+    fuckit = reset --hard
+    graph = log --graph --pretty=format:'%Cred%h%Creset -%C(red)%d%Creset %s %Cgreen(%cd) %C(cyan)[%an]%Creset' --abbrev-commit --date=short
+    last = log -n 1
+    lastd = diff HEAD~1
+    lastn = log -n
     mg = merge
     mga = merge --abort
     mgc = merge --continue
@@ -31,13 +29,18 @@
     pl = pull
     rs = reset
     rs-undo = reset --quiet HEAD@{1}
+    s = status
+    ss = status -s
+    stss = stash save
+    stsa = stash apply
+    stsd = stash drop
+    stsp = stash pop
+    stsl = stash list
     subupd = submodule update --init --recursive
     undo = reset HEAD~1
-    fuckit = reset --hard
-    last = log -n 1
-    lastd = diff HEAD~1
-    lastn = log -n
-    graph = log --graph --pretty=format:'%Cred%h%Creset -%C(red)%d%Creset %s %Cgreen(%cd) %C(cyan)[%an]%Creset' --abbrev-commit --date=short
+    wta = worktree add
+    wtl = worktree list
+    wtr = worktree remove
 [color "status"]
     changed = red bold
     untracked = red bold
@@ -46,12 +49,14 @@
     old = red bold
     new = green bold
     meta = cyan
+[credential]
+    helper = store
+[init]
+    defaultBranch = main
+[submodule]
+    recurse = true
 # [filter "lfs"]
 #    clean = git-lfs clean -- %f
 #    smudge = git-lfs smudge -- %f
 #    process = git-lfs filter-process
 #    required = true
-[submodule]
-    recurse = true
-[credential]
-    helper = store
