@@ -13,8 +13,8 @@
   #   These packages will be of the buildPlatforms architecture, and added to PATH. [1]
   nativeBuildInputs = with pkgs.buildPackages; [
     cmake
+    gcc14
     gnumake
-    libgcc
   ];
 
   # buildInputs:
@@ -31,10 +31,12 @@
     libglvnd
     libjack2
     libmpc
+    libpulseaudio
     # libstdcxx5 should be left out of buildInputs.
     libxcrypt
-    mesa
+    # unstable.mesa
     mpfr
+    xorg.libX11
     zlib
   ];
 
@@ -42,17 +44,17 @@
   #   Adds executable packages to the nix-shell environment. [2]
   packages = with pkgs; [
     cmake
+    gcc14
     gnome.eog
     gnumake
     htop
-    libgcc
     pavucontrol
   ];
 
   # shellHook:
   #   Bash statements that are executed by nix-shell. [2]
   shellHook = ''
-    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib.outPath}/lib"
+    # export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib.outPath}/lib"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath buildInputs}"
   '';
 }

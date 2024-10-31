@@ -50,6 +50,7 @@ in {
   # Nvidia config
   hardware.opengl = {
     enable = true;
+    package = unstable.mesa.drivers;
     driSupport = true;
     driSupport32Bit = true;
   };
@@ -110,9 +111,11 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    bintools
     cmake
     dconf
     freeglut
+    gcc14  # Consider reverting to libgcc once it's bumped to v14 (Hyprland depends on v14). Also for shell.nix entries.
     git
     glibc
     gmp
@@ -120,11 +123,11 @@ in {
     gnupg
     inetutils
     libexecinfo
-    libgcc
     libglvnd
     libmpc
+    libpulseaudio
     libxcrypt
-    mesa
+    unstable.mesa
     meson
     mpfr
     ninja
@@ -142,6 +145,7 @@ in {
     wireguard-tools
     wireplumber
     wl-clipboard-x11
+    xorg.libX11
     xwayland
   ];
 

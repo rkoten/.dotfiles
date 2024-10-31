@@ -64,7 +64,7 @@ in {
     qemu
     # qgis
     qt6.qtwayland
-    sparrow
+    unstable.sparrow
     spotify
     unstable.telegram-desktop
     tldr
@@ -141,7 +141,6 @@ in {
         "NIXOS_OZONE_WL,1"
         "QT_QPA_PLATFORM,wayland"
         "QT_SCALE_FACTOR,1.5"
-        "WLR_NO_HARDWARE_CURSORS,1"
         "XCURSOR_SIZE,28"
         "XDG_SESSION_TYPE,wayland"
       ];
@@ -153,6 +152,9 @@ in {
         kb_variant = "";
         follow_mouse = 1;
         sensitivity = -0.5;  # [-1.0, 1.0]; 0 means no modification.
+      };
+      cursor = {
+        no_hardware_cursors = true;
       };
       general = {
         gaps_in = 5;
