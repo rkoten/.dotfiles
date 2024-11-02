@@ -112,6 +112,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     bintools
+    cifs-utils  # SMB helpers
     cmake
     dconf
     freeglut
@@ -187,10 +188,47 @@ in {
 
   virtualisation.docker.enable = true;
 
-  # TODO fix local mDNS discovery
-  # services.avahi = {
-  #   enable = true;
-  # };
+  services.samba = {
+    # Note: still need to set up once manually with `sudo smbpasswd -a yourusername`.
+    enable = true;
+    openFirewall = true;
+    extraConfig = ''
+      browseable = yes
+      smb encrypt = required
+    '';
+    shares = {
+      homes = {
+        browseable = "no";  # Each home will be browseable; the "homes" share will not.
+        "read only" = "no";
+        "guest ok" = "no";
+      };
+    };
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      domain = true;
+      hinfo = true;
+      userServices = true;
+      workstation = true;
+    };
+    extraServiceFiles = {
+      smb = ''
+        <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">%h</name>
+          <service>
+            <type>_smb._tcp</type>
+            <port>445</port>
+          </service>
+        </service-group>
+      '';
+    };
+  };
 
   # TODO cachix
   # nix.settings = {
@@ -224,7 +262,6 @@ in {
   # };
 
   # TODO fix vlc pixelation & hangs
-  # TODO setup smb file sharing
 }
 
 # [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
