@@ -60,7 +60,7 @@ in {
     obs-studio
     obs-studio-plugins.wlrobs
     unstable.obsidian
-    qbittorrent
+    unstable.qbittorrent
     qemu
     # qgis
     qt6.qtwayland
@@ -165,17 +165,16 @@ in {
         layout = "dwindle";
         allow_tearing = false;  # https://wiki.hyprland.org/Configuring/Tearing
       };
+      # https://wiki.hyprland.org/Configuring/Variables/#decoration
       decoration = {
         rounding = 10;
         blur = {
           enabled = true;
-          size = 3;
-          passes = 1;
+          size = 4;
         };
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
+        shadow = {
+          enabled = true;
+        };
       };
       # https://wiki.hyprland.org/Configuring/Animations
       animations = {
