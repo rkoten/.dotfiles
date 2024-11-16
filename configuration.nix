@@ -173,12 +173,16 @@ in {
     ];
   };
 
+  users.groups = {
+    plugdev = {};
+  };
   users.users.rm = {
     isNormalUser = true;
     extraGroups = [
       "audio"
       "docker"  # Enables interaction with the docker daemon.
       "networkmanager"  # Grants permission to change network settings. [1]
+      "plugdev"  # Allows mounting (only nodev and nosuid, for security reasons) removable devices through pmount. [3]
       "wheel"  # Enable sudo for the user.
     ];
   };
@@ -239,6 +243,35 @@ in {
     };
   };
 
+  services.udev = {
+    # Might need to manually apply changes with `sudo udevadm control --reload-rules && sudo udevadm trigger`.
+    packages = [
+      (pkgs.writeTextFile {
+        name = "wooting_udev";
+        text = ''
+          # Wooting One Legacy
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="ff01", TAG+="uaccess", GROUP="plugdev"
+          SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="ff01", TAG+="uaccess", GROUP="plugdev"
+
+          # Wooting One update mode
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2402", TAG+="uaccess", GROUP="plugdev"
+
+          # Wooting Two Legacy
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="ff02", TAG+="uaccess", GROUP="plugdev"
+          SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="ff02", TAG+="uaccess", GROUP="plugdev"
+
+          # Wooting Two update mode
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2403", TAG+="uaccess", GROUP="plugdev"
+
+          # Generic Wootings
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="31e3", TAG+="uaccess", GROUP="plugdev"
+          SUBSYSTEM=="usb", ATTRS{idVendor}=="31e3", TAG+="uaccess", GROUP="plugdev"
+        '';
+        destination = "/etc/udev/rules.d/70-wooting.rules";
+      })
+    ];
+  };
+
   # TODO cachix
   # nix.settings = {
   #   substituters = [];
@@ -269,9 +302,8 @@ in {
   #   dates = "05:00:00";
   #   options = "--delete-older-than 7d";
   # };
-
-  # TODO fix vlc pixelation & hangs
 }
 
 # [1]: https://nixos.org/manual/nixos/unstable/index.html#sec-networkmanager
 # [2]: https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
+# [3]: https://wiki.debian.org/SystemGroups
