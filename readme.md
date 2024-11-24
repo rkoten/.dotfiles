@@ -42,6 +42,14 @@ timedatectl set-local-rtc 1
  6. Access via `smb://<ip-address>` and use the full `username@hostname` combination as username when connecting.
 
 
+## Filesystems
+
+### Mount NTFS drives
+1. `lsblk -f` lists available filesystems.
+2. `udisksctl mount -b /dev/X` mounts specified block device.
+
+NixOS note: make sure `"ntfs"` is listed under `boot.supportedFilesystems` in OS config.
+
 ## Utils
   - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
     ```

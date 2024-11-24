@@ -24,6 +24,8 @@ in {
 
   home.packages = with pkgs; [
     # Dev packages
+    unstable.android-studio
+    jetbrains.rust-rover
     nodePackages.nodejs
     protobuf
     protoc-gen-validate
@@ -51,7 +53,6 @@ in {
     gnome.gnome-system-monitor
     gnome.nautilus
     hyprshade  # TODO configure https://github.com/loqusion/hyprshade
-    jetbrains.rust-rover
     kdePackages.okular
     keepass
     kitty
