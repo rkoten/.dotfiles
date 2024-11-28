@@ -25,6 +25,7 @@ in {
   home.packages = with pkgs; [
     # Dev packages
     unstable.android-studio
+    android-tools
     jetbrains.rust-rover
     nodePackages.nodejs
     protobuf

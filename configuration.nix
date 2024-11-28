@@ -135,6 +135,7 @@ in {
     gnumake
     gnupg
     inetutils
+    jre_minimal
     libexecinfo
     libglvnd
     libmpc
