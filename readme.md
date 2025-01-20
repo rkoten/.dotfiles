@@ -3,9 +3,19 @@
 
 ## Basics
 
-- List permissions: `ls -ld`
-  - {read, write, execute} by {user, group, other}
-  - Read=4, Write=2, Execute=1; combination=sum.
+### List permissions
+`ls -ld`
+- {read, write, execute} by {user, group, other}
+- Read=4, Write=2, Execute=1; combination=sum.
+
+### Hex dump
+`xxd | less`
+
+### Mount NTFS drives
+1. `lsblk -f` lists available filesystems.
+2. `udisksctl mount -b /dev/X` mounts specified block device.
+
+NixOS note: make sure `"ntfs"` is listed under `boot.supportedFilesystems` in OS config.
 
 
 ## Initial setup
@@ -41,14 +51,6 @@ timedatectl set-local-rtc 1
     ```
  6. Access via `smb://<ip-address>` and use the full `username@hostname` combination as username when connecting.
 
-
-## Filesystems
-
-### Mount NTFS drives
-1. `lsblk -f` lists available filesystems.
-2. `udisksctl mount -b /dev/X` mounts specified block device.
-
-NixOS note: make sure `"ntfs"` is listed under `boot.supportedFilesystems` in OS config.
 
 ## Utils
   - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
