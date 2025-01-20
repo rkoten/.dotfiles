@@ -1,0 +1,42 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+format = """
+$cmd_duration\
+$line_break\
+$username\
+$directory\
+$python\
+$jobs\
+$character
+"""
+
+[character]
+error_symbol = '[%](bold #33FF33)'
+success_symbol = '[%](bold #33FF33)'
+
+[cmd_duration]
+format = "[\\($duration\\)]($style)\n"
+min_time = 0
+show_milliseconds = true
+
+[directory]
+format = '[$path]($style) '
+truncate_to_repo = false
+truncation_length = 0
+style = "bold white"
+
+[jobs]
+format = '[$symbol$number]($style) '
+number_threshold = 1
+symbol = '+'
+symbol_threshold = 1
+
+[python]
+format = '[\($pyenv_prefix"$virtualenv" on py$version\)]($style) '
+version_format = '$raw'
+
+[username]
+format = '[$user]($style) '
+show_always = true
+style_user = "bold cyan"
