@@ -31,6 +31,9 @@ timedatectl set-local-rtc 1
  - `sudo chmod 000 /usr/bin/update-notifier`
  - Reboot
 
+
+## Networking
+
 ### Network fileshare
  1. ```
     sudo apt install samba smbclient
@@ -51,6 +54,12 @@ timedatectl set-local-rtc 1
     ```
  6. Access via `smb://<ip-address>` and use the full `username@hostname` combination as username when connecting.
 
+### Check active network interface
+```shell
+route -n get <any-ip> | grep interface
+# e.g.
+route -n get 1.1.1.1 | grep interface
+```
 
 ## Utils
   - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
