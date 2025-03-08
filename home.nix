@@ -25,8 +25,10 @@ in {
   home.packages = with pkgs; [
     # Dev packages
     unstable.android-studio
-    android-tools
-    jetbrains.rust-rover
+    unstable.android-tools
+    unstable.jetbrains.clion
+    unstable.jetbrains.pycharm-professional
+    unstable.jetbrains.rust-rover
     nodePackages.nodejs
     protobuf
     protoc-gen-validate
@@ -84,8 +86,8 @@ in {
       alefragnani.bookmarks
       jebbs.plantuml
       jnoortheen.nix-ide
-      ms-python.python
-      ms-vscode.cpptools
+      # ms-python.python
+      # ms-vscode.cpptools
       ms-vscode.hexeditor
       twxs.cmake
       zainchen.json
@@ -156,7 +158,7 @@ in {
         sensitivity = -0.5;  # [-1.0, 1.0]; 0 means no modification.
       };
       cursor = {
-        no_hardware_cursors = true;
+        no_hardware_cursors = 0;  # Use hw cursors if possible.
       };
       general = {
         gaps_in = 5;
@@ -204,6 +206,7 @@ in {
       # windowrule = float, ^(kitty)$
       # Example windowrule v2
       # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+      # Since 0.46.0: window/layer rule regexes now require a full match (not any match) to trigger.
       # See https://wiki.hyprland.org/Configuring/Window-Rules for more
       "$launchpad" = "wofi --show drun";
       "$fileManager" = "nautilus";
@@ -275,6 +278,9 @@ in {
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
+      ecosystem = {
+        no_update_news = true;
+      };
     };
     plugins = with unstable.hyprlandPlugins; [
       hyprbars
