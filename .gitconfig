@@ -27,6 +27,9 @@
     mgc = merge --continue
     mgt = mergetool
     pl = pull
+    rb = rebase
+    rba = rebase --abort
+    rbc = rebase --continue
     rs = reset
     rs-undo = reset --quiet HEAD@{1}
     s = status
