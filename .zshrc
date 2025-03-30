@@ -15,6 +15,13 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
 
+alias ls='lsd'
+alias lsa='ls -a'
+alias lsl='ls -l'
+alias lsal='ls -al'
+alias lst='ls --tree'
+alias lsat='ls -a --tree'
+
 eval "$(starship init zsh)"
 
 eval "$(~/Library/Python/3.9/bin/aactivator init)"
@@ -25,3 +32,5 @@ pyvenv() {
     echo "source venv/bin/activate" >> .activate.sh
     echo "deactivate" >> .deactivate.sh
 }
+
+eval "$(zellij setup --generate-auto-start zsh)"
