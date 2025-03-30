@@ -3,13 +3,22 @@
 
 ## Basics
 
-### List permissions
+### Iterate over files in a directory
+```bash
+for file in *; do
+  if [ -f "$file" ]; then  # Skip to include directories
+    echo "$file"
+  fi
+done
+```
+
+### List file permissions
 `ls -ld`
 - {read, write, execute} by {user, group, other}
 - Read=4, Write=2, Execute=1; combination=sum.
 
 ### Hex dump
-`xxd | less`
+`xxd` (best piped through `less`).
 
 ### Mount NTFS drives
 1. `lsblk -f` lists available filesystems.
@@ -22,7 +31,7 @@ NixOS note: make sure `"ntfs"` is listed under `boot.supportedFilesystems` in OS
 
 ### Dual boot with Windows
 Fix Windows timezone:
-```
+```shell
 timedatectl set-local-rtc 1
 ```
 
@@ -72,6 +81,20 @@ route -n get 1.1.1.1 | grep interface
 
 #### Extensions
   - [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus) brings popup windows to focus instead of "is ready" notification.
+
+### ffmpeg
+
+#### Reencode voice recording in Opus
+Assume 24k output bitrate.
+```shell
+ffmpeg -i <audio-input> -c:a libopus -b:a 24k -ar 24k -ac 1 -application voip <audio-output.ogg>
+```
+
+#### Reencode video with rendered subtitles
+Assume 1920x1080 output res, Avenir font @ size 16.
+```shell
+ffmpeg -i <video-input> -vf "scale=1920:1080:flags=lanczos:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,subtitles=<subtitle-input>:force_style='Fontname=Avenir,Fontsize=16'" -ss <start timestamp hh:mm:ss> -t <duration hh:mm:ss> <video-output>
+```
 
 ### raspbian
 
