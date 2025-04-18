@@ -1,2 +1,2 @@
+# Taken from https://github.com/galenguyer/nano-syntax-highlighting.git
 include "~/.nano/*.nanorc"
-

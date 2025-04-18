@@ -70,6 +70,13 @@ route -n get <any-ip> | grep interface
 route -n get 1.1.1.1 | grep interface
 ```
 
+### SSH via ghostty
+When ssh-ing from ghostty into a machine that is unaware of ghostty's metadata, an `Error opening terminal: xterm-ghostty.` may occur. To fix, once in the remote shell:
+```shell
+export TERM=xterm-256color
+```
+Reference: https://ghostty.org/docs/help/terminfo
+
 ## Utils
   - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
     ```
