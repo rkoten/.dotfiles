@@ -1,5 +1,4 @@
-# rkoten's Linux readme
-
+# rkoten's Unix readme
 
 ## Basics
 
