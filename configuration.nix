@@ -51,11 +51,10 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Nvidia config
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    package = unstable.mesa.drivers;
-    driSupport = true;
-    driSupport32Bit = true;
+    package = unstable.mesa;
+    enable32Bit = true;
   };
   hardware.nvidia = {
     modesetting.enable = true;
@@ -63,16 +62,7 @@ in {
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    # Version 555 introduced explicit sync which fixes black flickering in some GUIs. Once stable reaches 555, revert to
-    # `config.boot.kernelPackages.nvidiaPackages.stable`.
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "555.58.02";
-      sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
-      sha256_aarch64 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
-      openSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
-      settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
-      persistencedSha256 = lib.fakeSha256;
-    };
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -199,7 +189,7 @@ in {
     liberation_ttf
     mplus-outline-fonts.githubRelease
     noto-fonts
-    noto-fonts-cjk  # Asian languages support
+    noto-fonts-cjk-sans  # Asian languages support
     vistafonts  # Consolas <3
   ];
 
@@ -207,15 +197,16 @@ in {
 
   services.samba = {
     # Note: still need to set up once manually with `sudo smbpasswd -a yourusername`.
+    # Note: untested after the settings entry has been migrated from 24.05 to 25.05
     enable = true;
     openFirewall = true;
-    extraConfig = ''
-      browseable = yes
-      smb encrypt = required
-    '';
-    shares = {
+    settings = {
+      global = {
+        browseable = "yes";
+        "smb encrypt" = "required";
+      };
       homes = {
-        browseable = "no";  # Each home will be browseable; the "homes" share will not.
+        browseable = "no";
         "read only" = "no";
         "guest ok" = "no";
       };

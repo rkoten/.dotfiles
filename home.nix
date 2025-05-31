@@ -29,6 +29,7 @@ in {
     unstable.jetbrains.clion
     unstable.jetbrains.pycharm-professional
     unstable.jetbrains.rust-rover
+    docker-compose
     nodePackages.nodejs
     protobuf
     protoc-gen-validate
@@ -40,27 +41,27 @@ in {
     playerctl
     unstable.waybar
     wofi
-    xdg-desktop-portal-hyprland
+    # xdg-desktop-portal-hyprland
     xdg-user-dirs
     xdg-utils
 
     # User packages
     discord
+    eog  # Image viewer
     firefox
     gedit
     gimp
-    gnome.eog  # Image viewer
-    gnome.gnome-calculator
-    gnome.gnome-characters
-    gnome.gnome-font-viewer
-    gnome.gnome-system-monitor
-    gnome.nautilus
+    gnome-calculator
+    gnome-characters
+    gnome-font-viewer
+    gnome-system-monitor
     hyprshade  # TODO configure https://github.com/loqusion/hyprshade
     kdePackages.okular
     keepass
     kitty
     # libreoffice
     mc
+    nautilus
     obs-studio
     obs-studio-plugins.wlrobs
     unstable.obsidian
@@ -80,35 +81,37 @@ in {
   programs.vscode = {
     enable = true;
     package = unstable.vscode;
-    enableUpdateCheck = false;
-    enableExtensionUpdateCheck = false;
-    extensions = with unstable.vscode-extensions; [
-      alefragnani.bookmarks
-      jebbs.plantuml
-      jnoortheen.nix-ide
-      # ms-python.python
-      # ms-vscode.cpptools
-      ms-vscode.hexeditor
-      twxs.cmake
-      zainchen.json
-      zxh404.vscode-proto3
-    ];
-    userSettings = {
-      # Core
-      "editor.rulers" = [ 120 ];
-      "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
-      "extensions.ignoreRecommendations" = true;
-      "files.insertFinalNewline" = true;
-      "files.trimTrailingWhitespace" = true;
-      "update.showReleaseNotes" = false;
-      "window.zoomLevel" = 1;
+    profiles.default = {
+      enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
+      extensions = with unstable.vscode-extensions; [
+        alefragnani.bookmarks
+        jebbs.plantuml
+        jnoortheen.nix-ide
+        # ms-python.python
+        # ms-vscode.cpptools
+        ms-vscode.hexeditor
+        twxs.cmake
+        zainchen.json
+        zxh404.vscode-proto3
+      ];
+      userSettings = {
+        # Core
+        "editor.rulers" = [ 120 ];
+        "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
+        "extensions.ignoreRecommendations" = true;
+        "files.insertFinalNewline" = true;
+        "files.trimTrailingWhitespace" = true;
+        "update.showReleaseNotes" = false;
+        "window.zoomLevel" = 1;
 
-      # Plugins
-      "C_Cpp.inactiveRegionOpacity" = 0.65;
-      "gitlens.codeLens.enabled" = false;
-      "gitlens.statusBar.enabled" = false;
-      "hexeditor.columnWidth" = 16;
-      "solidity.telemetry" = false;
+        # Plugins
+        "C_Cpp.inactiveRegionOpacity" = 0.65;
+        "gitlens.codeLens.enabled" = false;
+        "gitlens.statusBar.enabled" = false;
+        "hexeditor.columnWidth" = 16;
+        "solidity.telemetry" = false;
+      };
     };
   };
 
@@ -292,7 +295,8 @@ in {
   # Enable links opening across programs.
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    # TODO fix after migration 24.05 -> 25.05
+    # extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
     config.common.default = [ "*" ];  # TODO there's probably a more granular working setup
     xdgOpenUsePortal = true;
   };

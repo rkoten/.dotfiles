@@ -76,6 +76,16 @@ export TERM=xterm-256color
 ```
 Reference: https://ghostty.org/docs/help/terminfo
 
+
+## Nix specifics
+
+### Include a specific package inline
+On the example of `nix` and `nixos-rebuild` from the unstable repo:
+```shell
+nix shell github:NixOS/nixpkgs/nixpkgs-unstable#{nix,nixos-rebuild}
+```
+
+
 ## Utils
   - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
     ```

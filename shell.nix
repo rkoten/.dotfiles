@@ -45,7 +45,7 @@
   packages = with pkgs; [
     cmake
     gcc14
-    gnome.eog
+    eog  # Image viewer
     gnumake
     htop
     pavucontrol
