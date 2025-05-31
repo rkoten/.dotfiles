@@ -1,0 +1,7 @@
+click-repeat-interval = 400
+cursor-style = block
+font-family = "JetBrainsMono Nerd Font"
+font-feature = "-calt"
+font-size = 15
+scrollback-limit = 31337000
+theme = "Monokai Remastered"

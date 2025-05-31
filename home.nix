@@ -50,6 +50,7 @@ in {
     eog  # Image viewer
     firefox
     gedit
+    ghostty
     gimp
     gnome-calculator
     gnome-characters

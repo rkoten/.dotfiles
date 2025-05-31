@@ -13,8 +13,8 @@
   #   These packages will be of the buildPlatforms architecture, and added to PATH. [1]
   nativeBuildInputs = with pkgs.buildPackages; [
     cmake
-    gcc14
     gnumake
+    libgcc
   ];
 
   # buildInputs:
@@ -44,10 +44,10 @@
   #   Adds executable packages to the nix-shell environment. [2]
   packages = with pkgs; [
     cmake
-    gcc14
     eog  # Image viewer
     gnumake
     htop
+    libgcc
     pavucontrol
   ];
 

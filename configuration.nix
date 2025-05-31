@@ -118,7 +118,6 @@ in {
     cmake
     dconf
     freeglut
-    gcc14  # Consider reverting to libgcc once it's bumped to v14 (Hyprland depends on v14). Also for shell.nix entries.
     git
     glibc
     gmp
@@ -127,6 +126,7 @@ in {
     inetutils
     jre_minimal
     libexecinfo
+    libgcc
     libglvnd
     libmpc
     libpulseaudio
