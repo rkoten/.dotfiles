@@ -112,6 +112,14 @@ Assume 1920x1080 output res, Avenir font @ size 16.
 ffmpeg -i <video-input> -vf "scale=1920:1080:flags=lanczos:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,subtitles=<subtitle-input>:force_style='Fontname=Avenir,Fontsize=16'" -ss <start timestamp hh:mm:ss> -t <duration hh:mm:ss> <video-output>
 ```
 
+### cpdf (Coherent PDF)
+Manual: [link](https://coherentpdf.com/dotnetcpdflibmanual.pdf)
+
+#### Combine PDFs
+```shell
+cpdf input1.pdf input2.pdf [inputN.pdf] -o output.pdf
+```
+
 ### raspbian
 
 #### raspi-config
