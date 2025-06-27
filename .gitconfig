@@ -27,6 +27,7 @@
     mgc = merge --continue
     mgt = mergetool
     pl = pull
+    plrb = pull --rebase
     rb = rebase
     rba = rebase --abort
     rbc = rebase --continue
