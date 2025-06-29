@@ -87,16 +87,55 @@ nix shell github:NixOS/nixpkgs/nixpkgs-unstable#{nix,nixos-rebuild}
 
 
 ## Utils
-  - [GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
-    ```
-    sudo add-apt-repository ppa:danielrichter2007/grub-customizer
-    sudo apt install grub-customizer
-    ```
+
+### Docker
+Assume container name "image".
+
+Build the container from Dockerfile in the current dir:
+```shell
+docker build -t image .
+```
+
+Run the built container, assume port 1337:
+```shell
+docker run [--rm] [-d] [--privileged] -p 1337:1337 [--name nickname] image
+```
+- `--rm` removes the container once it's stopped.
+- `-d` runs it detached and gives back control over the shell.
+- `--privileged` lifts capability limitations on the container (can do virtually everything that the host can).
+- `--name` gives the container a nickname, for convenient referencing.
+
+List existing (running and stopped) containers:
+```shell
+docker ps -a
+```
+
+From the listed containers in the step above, take the reference (hash or nickname) of the given container.
+```shell
+docker exec -it <reference> /bin/bash
+```
+
+When done:
+```shell
+docker stop <reference>
+```
+
+If `--rm` was not passed when running a container, to remove it after stopping:
+```shell
+docker rm <reference>
+```
 
 ### Gnome
 
 #### Extensions
   - [Grand Theft Focus](https://extensions.gnome.org/extension/5410/grand-theft-focus) brings popup windows to focus instead of "is ready" notification.
+
+### GRUB
+[GRUB Customizer](https://launchpad.net/grub-customizer) is a GUI for GRUB configuration.
+```shell
+sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+sudo apt install grub-customizer
+```
 
 ### ffmpeg
 
