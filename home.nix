@@ -24,12 +24,14 @@ in {
 
   home.packages = with pkgs; [
     # Dev packages
-    unstable.android-studio
+    # unstable.android-studio
     unstable.android-tools
+    unstable.gemini-cli
     unstable.jetbrains.clion
     unstable.jetbrains.pycharm-professional
     unstable.jetbrains.rust-rover
     docker-compose
+    gdb
     nodePackages.nodejs
     protobuf
     protoc-gen-validate
@@ -47,7 +49,7 @@ in {
 
     # User packages
     discord
-    eog  # Image viewer
+    eog  # Gnome image viewer
     firefox
     gedit
     ghostty
@@ -93,11 +95,13 @@ in {
         # ms-vscode.cpptools
         ms-vscode.hexeditor
         twxs.cmake
+        vitaliymaz.vscode-svg-previewer
         zainchen.json
         zxh404.vscode-proto3
       ];
       userSettings = {
         # Core
+        # "editor.fontFamily" = "'JetBrains Mono Nerd Font', 'monospace'";
         "editor.rulers" = [ 120 ];
         "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
         "extensions.ignoreRecommendations" = true;
@@ -204,7 +208,6 @@ in {
         preserve_split = true;  # Recommended to enable.
       };
       master.new_status = "master";  # https://wiki.hyprland.org/Configuring/Master-Layout
-      gestures.workspace_swipe = false;
       misc.force_default_wallpaper = 0;  # Disables the anime mascot wallpapers.
       # Example windowrule v1
       # windowrule = float, ^(kitty)$

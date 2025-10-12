@@ -19,7 +19,7 @@ let
 in {
   imports = [
     /etc/nixos/hardware-configuration.nix
-    ./wireguard.nix
+    # ./wireguard.nix
   ];
 
   boot = {
@@ -188,6 +188,8 @@ in {
     joypixels  # Emoji support
     liberation_ttf
     mplus-outline-fonts.githubRelease
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans  # Asian languages support
     vistafonts  # Consolas <3
