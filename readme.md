@@ -12,9 +12,16 @@ done
 ```
 
 ### List file permissions
-`ls -ld`
+```shell
+ls -ld
+```
 - {read, write, execute} by {user, group, other}
 - Read=4, Write=2, Execute=1; combination=sum.
+
+### Kill a suspended process
+```shell
+kill %1
+```
 
 ### Hex dump
 `xxd` (best piped through `less`).
@@ -67,6 +74,11 @@ timedatectl set-local-rtc 1
 route -n get <any-ip> | grep interface
 # e.g.
 route -n get 1.1.1.1 | grep interface
+```
+
+### Run a speed test (macOS)
+```shell
+networkquality
 ```
 
 ### SSH via ghostty

@@ -7,8 +7,8 @@ if type brew &>/dev/null; then
 fi
 
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-bindkey '^[[5~' history-substring-search-up
-bindkey '^[[6~' history-substring-search-down
+bindkey '^[[5~' history-substring-search-up    # fn+Up
+bindkey '^[[6~' history-substring-search-down  # fn+Down
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -32,5 +32,3 @@ pyvenv() {
     echo "source venv/bin/activate" >> .activate.sh
     echo "deactivate" >> .deactivate.sh
 }
-
-eval "$(zellij setup --generate-auto-start zsh)"
