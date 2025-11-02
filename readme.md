@@ -1,8 +1,10 @@
-# rkoten's Unix readme
+# rkoten's Unix notes
 
 ## Basics
 
-### Iterate over files in a directory
+### Files
+
+#### Iterate over files in a directory
 ```bash
 for file in *; do
   if [ -f "$file" ]; then  # Skip to include directories
@@ -11,26 +13,41 @@ for file in *; do
 done
 ```
 
-### List file permissions
+#### List file permissions
 ```shell
 ls -ld
 ```
 - {read, write, execute} by {user, group, other}
 - Read=4, Write=2, Execute=1; combination=sum.
 
-### Kill a suspended process
-```shell
-kill %1
-```
-
-### Hex dump
-`xxd` (best piped through `less`).
-
-### Mount NTFS drives
+#### Mount NTFS drives
 1. `lsblk -f` lists available filesystems.
 2. `udisksctl mount -b /dev/X` mounts specified block device.
 
 NixOS note: make sure `"ntfs"` is listed under `boot.supportedFilesystems` in OS config.
+
+### Processes
+
+#### Find a process by keyword
+```shell
+pgrep -il "keyword"
+```
+\- OR -
+```shell
+ps aux | grep "keyword"
+```
+(ignore `grep` itself as it'll be included in the `ps aux` results).
+
+#### Kill a process
+
+- Gracefully by PID: `kill <pid>`
+- Forcefully by PID: `kill -9 <pid>`
+- Suspended process in the current shell: `kill %1`
+
+### Utils
+
+- File description: `file`
+- Hex dump: `xxd` (best piped through `less`).
 
 
 ## Initial setup
