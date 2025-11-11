@@ -2,6 +2,8 @@
 [user]
     name = Roman Kotenko
     # email = ;)
+[core]
+    excludesfile = ~/.gitignore-global
 [alias]
     a = add
     br = branch
