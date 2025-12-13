@@ -4,6 +4,7 @@ add_newline = false
 format = """
 $cmd_duration\
 $line_break\
+$time\
 $username\
 $directory\
 $python\
@@ -35,6 +36,11 @@ symbol_threshold = 1
 [python]
 format = '[\($pyenv_prefix"$virtualenv" on py$version\)]($style) '
 version_format = '$raw'
+
+[time]
+format = '[\[$time\]]($style) '
+time_format = '%F %T'
+disabled = true
 
 [username]
 format = '[$user]($style) '
