@@ -16,3 +16,4 @@ split-inherit-working-directory = true
 tab-inherit-working-directory = true
 theme = "Monokai Remastered"
 window-inherit-working-directory = false
+window-save-state = always
