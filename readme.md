@@ -181,14 +181,15 @@ ffmpeg -i <video-input> -vf "scale=1920:1080:flags=lanczos:force_original_aspect
 ```
 
 ### cpdf (Coherent PDF)
-Manual: [link](https://coherentpdf.com/dotnetcpdflibmanual.pdf)
+Manual: [link](https://coherentpdf.com/cpdfmanual.pdf)
+
+#### Image to PDF
+```shell
+cpdf -jpeg image.jpg -o out.pdf
+cpdf -png image.png -o out.pdf
+```
 
 #### Combine PDFs
 ```shell
 cpdf input1.pdf input2.pdf [inputN.pdf] -o output.pdf
 ```
-
-### raspbian
-
-#### raspi-config
-TODO
