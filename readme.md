@@ -193,3 +193,8 @@ cpdf -png image.png -o out.pdf
 ```shell
 cpdf input1.pdf input2.pdf [inputN.pdf] -o output.pdf
 ```
+
+#### Split PDF into pages
+```shell
+cpdf -split input.pdf -o input-%%%.pdf
+```
