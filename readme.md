@@ -198,3 +198,9 @@ cpdf input1.pdf input2.pdf [inputN.pdf] -o output.pdf
 ```shell
 cpdf -split input.pdf -o input-%%%.pdf
 ```
+
+#### Extract images from PDF
+Depends on imagemagick binaries being available.
+```shell
+cpdf -extract-images input.pdf -o input-%%%
+```
