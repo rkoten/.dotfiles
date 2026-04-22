@@ -13,7 +13,11 @@ bindkey '^[[6~' history-substring-search-down  # fn+Down
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source <(fzf --zsh)
-eval "$(zoxide init --cmd cd zsh)"
+
+# Only init zoxide in interactive shell sessions (avoids issues in e.g. agentic usecases)
+if [[ $- == *i* ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 alias ls='lsd'
 alias lsa='ls -a'
