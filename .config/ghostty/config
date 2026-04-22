@@ -1,5 +1,5 @@
 background-blur = 8
-background-opacity = 0.92
+# background-opacity = 0.92  # Uncomment when tab bar opacity in fullscreen is fixed
 background-opacity-cells = true
 click-repeat-interval = 400
 cursor-style = block
@@ -19,8 +19,10 @@ notify-on-command-finish-action = no-bell,notify
 notify-on-command-finish-after = 60s
 scrollback-limit = 31337000
 shell-integration-features = no-cursor
+split-divider-color = #005500
 split-inherit-working-directory = true
 tab-inherit-working-directory = true
 theme = "Monokai Remastered"
+unfocused-split-opacity = 0.5
 window-inherit-working-directory = false
 window-save-state = always
