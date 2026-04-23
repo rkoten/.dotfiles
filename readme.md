@@ -168,6 +168,12 @@ sudo apt install grub-customizer
 
 ### ffmpeg
 
+#### Trim video
+```shell
+ffmpeg -i <input-file> -ss <XX:XX:XX> -to <YY:YY:YY> -c copy <output-file>
+```
+`-c copy`: stream copy, no reencoding.
+
 #### Reencode voice recording in Opus
 Assume 24k output bitrate.
 ```shell
