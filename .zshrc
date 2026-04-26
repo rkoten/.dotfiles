@@ -1,21 +1,21 @@
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-    autoload -Uz compinit
-    compinit
-fi
-
-source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-bindkey '^[[5~' history-substring-search-up    # fn+Up
-bindkey '^[[6~' history-substring-search-down  # fn+Down
-
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-source <(fzf --zsh)
-
-# Only init zoxide in interactive shell sessions (avoids issues in e.g. agentic usecases)
+# Only init these in interactive shell sessions (avoids issues in e.g. agentic usecases)
 if [[ $- == *i* ]]; then
+    source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+    if type brew &>/dev/null; then
+        FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
+        autoload -Uz compinit
+        compinit
+    fi
+
+    source "$HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    bindkey '^[[5~' history-substring-search-up    # fn+Up
+    bindkey '^[[6~' history-substring-search-down  # fn+Down
+
+    source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+    source <(fzf --zsh)
+
     eval "$(zoxide init --cmd cd zsh)"
 fi
 
