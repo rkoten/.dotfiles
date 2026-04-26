@@ -1,3 +1,4 @@
+bell-features = border,no-title
 background-blur = 8
 # background-opacity = 0.92  # Uncomment when tab bar opacity in fullscreen is fixed
 background-opacity-cells = true
