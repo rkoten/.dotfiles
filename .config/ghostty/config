@@ -27,3 +27,6 @@ theme = "Monokai Remastered"
 unfocused-split-opacity = 0.5
 window-inherit-working-directory = false
 window-save-state = always
+window-padding-balance = true
+window-padding-x = 4
+window-padding-y = 0,8
