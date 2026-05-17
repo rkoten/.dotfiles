@@ -1,0 +1,30 @@
+{
+    "chat.disableAIFeatures": true,
+    "editor.fontSize": 15,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [120],
+    "explorer.confirmDelete": false,
+    "extensions.ignoreRecommendations": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "git.openRepositoryInParentFolders": "never",
+    "json.schemaDownload.trustedDomains": {
+        "https://developer.microsoft.com/json-schemas/": true,
+        "https://json-schema.org/": true,
+        "https://json.schemastore.org/": true,
+        "https://models.dev": true,
+        "https://opencode.ai": true,
+        "https://raw.githubusercontent.com/devcontainers/spec/": true,
+        "https://raw.githubusercontent.com/microsoft/vscode/": true,
+        "https://schemastore.azurewebsites.net/": true,
+        "https://www.schemastore.org/": true
+    },
+    "update.showReleaseNotes": false,
+    "window.zoomLevel": 1,
+    "workbench.browser.showInTitleBar": true,
+    "workbench.colorTheme": "One Monokai",
+
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.hovers.currentLine.over": "line"
+}
