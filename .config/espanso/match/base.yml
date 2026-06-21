@@ -1,0 +1,32 @@
+# espanso match file
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+# macOS path: "~/Library/Application Support/espanso/match/base.yml"
+
+matches:
+
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  - trigger: ":localip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "ifconfig | grep 'inet 192' | awk '{ print $2 }'"
+
+  - trigger: ":netif"
+    replace: "Active network {{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "route -n get 1.1.1.1 | grep interface"
+
+  - trigger: "!clarify"
+    replace: "Clarify any crucial ambiguities before you begin."
