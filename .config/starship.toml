@@ -6,13 +6,14 @@ $cmd_duration\
 $line_break\
 $time\
 $username\
+$hostname\
 $directory\
 $python\
 $jobs\
 $character
 """
 
-[character]
+[character]  # ↳
 error_symbol = '[%](bold #33FF33)'
 success_symbol = '[%](bold #33FF33)'
 
@@ -22,10 +23,14 @@ min_time = 0
 show_milliseconds = true
 
 [directory]
-format = '[$path]($style) '
+format = ' [$path]($style) '
 truncate_to_repo = false
 truncation_length = 0
 style = "bold white"
+
+[hostname]
+format = '@[$hostname]($style)'
+style = 'dimmed yellow'
 
 [jobs]
 format = '[$symbol$number]($style) '
@@ -43,6 +48,7 @@ time_format = '%F %T'
 disabled = true
 
 [username]
-format = '[$user]($style) '
+format = '[$user]($style)'
 show_always = true
+style_root = "bold red"
 style_user = "bold cyan"
