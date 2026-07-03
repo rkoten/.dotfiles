@@ -1,5 +1,12 @@
 # Only init these in interactive shell sessions (avoids issues in e.g. agentic usecases)
 if [[ $- == *i* ]]; then
+    alias ls='lsd'
+    alias lsa='ls -a'
+    alias lsl='ls -l'
+    alias lsal='ls -al'
+    alias lst='ls --tree'
+    alias lsat='ls -a --tree'
+
     source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
     if type brew &>/dev/null; then
@@ -15,16 +22,8 @@ if [[ $- == *i* ]]; then
     source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
     source <(fzf --zsh)
-
     eval "$(zoxide init --cmd cd zsh)"
 fi
-
-alias ls='lsd'
-alias lsa='ls -a'
-alias lsl='ls -l'
-alias lsal='ls -al'
-alias lst='ls --tree'
-alias lsat='ls -a --tree'
 
 eval "$(starship init zsh)"
 
