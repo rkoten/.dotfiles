@@ -2,6 +2,7 @@
 
 add_newline = false
 format = """
+$character\
 $cmd_duration\
 $line_break\
 $time\
@@ -10,12 +11,13 @@ $hostname\
 $directory\
 $python\
 $jobs\
-$character
+[%](bold #33FF33) \
 """
 
-[character]  # ↳
-error_symbol = '[%](bold #33FF33)'
-success_symbol = '[%](bold #33FF33)'
+[character]
+disabled = true
+error_symbol = '[✘](bold #FF3333)'
+success_symbol = '[✔](bold #33FF33)'
 
 [cmd_duration]
 format = "[\\($duration\\)]($style)\n"
