@@ -1,6 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 add_newline = false
+scan_timeout = 50  # ms
+
 format = """
 $character\
 $cmd_duration\
@@ -21,7 +23,7 @@ success_symbol = '[✔](bold #33FF33)'
 
 [cmd_duration]
 format = "[\\($duration\\)]($style)\n"
-min_time = 0
+min_time = 0  # ms
 show_milliseconds = true
 
 [directory]
