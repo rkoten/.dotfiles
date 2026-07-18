@@ -26,15 +26,19 @@ in {
     # Dev packages
     # unstable.android-studio
     unstable.android-tools
-    unstable.gemini-cli
+    unstable.antigravity-cli
     unstable.jetbrains.clion
-    unstable.jetbrains.pycharm-professional
-    unstable.jetbrains.rust-rover
     docker-compose
     gdb
+    unstable.goose-cli
+    lazydocker
     nodePackages.nodejs
+    unstable.opencode
     protobuf
     protoc-gen-validate
+    unstable.jetbrains.pycharm
+    unstable.jetbrains.rust-rover
+    z3
 
     # Env packages
     dunst
@@ -48,11 +52,13 @@ in {
     xdg-utils
 
     # User packages
+    unstable.bat
     discord
     eog  # Gnome image viewer
+    unstable.fd
     firefox
     gedit
-    ghostty
+    unstable.ghostty
     gimp
     gnome-calculator
     gnome-characters
@@ -63,10 +69,12 @@ in {
     keepass
     kitty
     # libreoffice
+    unstable.lsd
     mc
     nautilus
     obs-studio
     obs-studio-plugins.wlrobs
+    unstable.ripgrep
     unstable.obsidian
     unstable.qbittorrent
     qemu
@@ -74,10 +82,13 @@ in {
     qt6.qtwayland
     unstable.sparrow
     spotify
+    unstable.starship
     unstable.telegram-desktop
-    tldr
+    tlrc
+    tmux
     vlc
     ungoogled-chromium
+    unzip
     unstable.vscode
   ];
 
@@ -101,12 +112,14 @@ in {
       ];
       userSettings = {
         # Core
+        "chat.disableAIFeatures" = true;
         # "editor.fontFamily" = "'JetBrains Mono Nerd Font', 'monospace'";
         "editor.rulers" = [ 120 ];
         "editor.selectionClipboard" = false;  # Fixes middle click multi-cursor selection.
         "extensions.ignoreRecommendations" = true;
         "files.insertFinalNewline" = true;
         "files.trimTrailingWhitespace" = true;
+        "git.openRepositoryInParentFolders" = "never";
         "update.showReleaseNotes" = false;
         "window.zoomLevel" = 1;
 
@@ -204,7 +217,6 @@ in {
       };
       # https://wiki.hyprland.org/Configuring/Dwindle-Layout
       dwindle = {
-        pseudotile = true;  # Master switch for pseudotiling. Bound to super+P in the keybinds section.
         preserve_split = true;  # Recommended to enable.
       };
       master.new_status = "master";  # https://wiki.hyprland.org/Configuring/Master-Layout
@@ -227,7 +239,7 @@ in {
         "SUPER, R, exec, $launchpad"
         # ", XF86Search, exec, $launchpad"
         "SUPER, P, pseudo,"  # dwindle
-        "SUPER, J, togglesplit,"  # dwindle
+        "SUPER, J, layoutmsg,"  # dwindle
         # Move focus with super+arrow keys
         "SUPER, left, movefocus, l"
         "SUPER, right, movefocus, r"

@@ -131,6 +131,7 @@ in {
     libmpc
     libpulseaudio
     libxcrypt
+    ltrace
     unstable.mesa
     meson
     mpfr

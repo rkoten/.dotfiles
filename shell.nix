@@ -37,6 +37,7 @@
     # unstable.mesa
     mpfr
     xorg.libX11
+    z3
     zlib
   ];
 
