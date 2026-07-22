@@ -53,7 +53,9 @@ in {
 
     # User packages
     unstable.bat
+    unstable.beads
     discord
+    unstable.dolt
     eog  # Gnome image viewer
     unstable.fd
     firefox
@@ -229,7 +231,7 @@ in {
       # See https://wiki.hyprland.org/Configuring/Window-Rules for more
       "$launchpad" = "wofi --show drun";
       "$fileManager" = "nautilus";
-      "$terminal" = "kitty";
+      "$terminal" = "ghostty";
       bind = [
         "SUPER, Q, exec, $terminal"
         "SUPER, C, killactive,"
