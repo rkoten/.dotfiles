@@ -20,9 +20,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.rm = import ./home.nix {
-                inherit flakeInputs;
-                inherit currentSystem;
+              users.rm = import ./home.nix;
+              extraSpecialArgs = {
+                inherit flakeInputs currentSystem;
                 username = "rm";
               };
             };

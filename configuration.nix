@@ -113,10 +113,12 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    unstable.bat
     bintools
     cifs-utils  # SMB helpers
     cmake
     dconf
+    unstable.fd
     freeglut
     git
     glibc
@@ -131,6 +133,7 @@ in {
     libmpc
     libpulseaudio
     libxcrypt
+    unstable.lsd
     ltrace
     unstable.mesa
     meson
@@ -142,6 +145,7 @@ in {
     polkit_gnome
     python3
     rar
+    unstable.ripgrep
     rustup
     tree
     usbutils
@@ -152,6 +156,7 @@ in {
     wl-clipboard-x11
     xorg.libX11
     xwayland
+    unstable.zoxide
   ];
 
   programs.nix-ld = {

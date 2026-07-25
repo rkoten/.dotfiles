@@ -1,6 +1,7 @@
-{ flakeInputs, currentSystem, username, ... }:
+{ config, flakeInputs, currentSystem, username, ... }:
 
 let
+  linkDotfile = path: config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/${path}";  # Works for dirs the same
   pkgs = import flakeInputs.nixpkgs {
     system = currentSystem;
     config.allowUnfree = true;
@@ -19,6 +20,9 @@ in {
       # Include per-user hm-session-vars.sh if it exists.
       [[ -f /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh ]] &&
       source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+
+      eval "$(zoxide init bash --cmd cd)"
+      eval "$(starship init bash)"
     '';
   };
 
@@ -52,12 +56,10 @@ in {
     xdg-utils
 
     # User packages
-    unstable.bat
     unstable.beads
     discord
     unstable.dolt
     eog  # Gnome image viewer
-    unstable.fd
     firefox
     gedit
     unstable.ghostty
@@ -71,12 +73,10 @@ in {
     keepass
     kitty
     # libreoffice
-    unstable.lsd
     mc
     nautilus
     obs-studio
     obs-studio-plugins.wlrobs
-    unstable.ripgrep
     unstable.obsidian
     unstable.qbittorrent
     qemu
@@ -309,6 +309,21 @@ in {
   };
 
   services.udiskie.enable = true;  # Requires system-level `services.udisks2.enable` set to true.
+
+  # Symlink dotfiles
+  home.file.".gitconfig".source = linkDotfile ".gitconfig";
+  home.file.".gitignore-global".source = linkDotfile ".gitignore-global";
+  home.file.".nano".source = linkDotfile ".nano";
+  home.file.".nanorc".source = linkDotfile ".nanorc";
+  home.file.".tmux.conf".source = linkDotfile ".tmux.conf";
+  xdg.configFile."ghostty" = { source = linkDotfile ".config/ghostty"; recursive = true; };
+  # In theory `recursive = true` is supposed to not conflict with existing dirs and only affect the leaf files.
+  # In practice that's not the case, hence the split opencode entries.
+  xdg.configFile."opencode/AGENTS.md".source = linkDotfile ".config/opencode/AGENTS.md";
+  xdg.configFile."opencode/opencode.jsonc".source = linkDotfile ".config/opencode/opencode.jsonc";
+  xdg.configFile."starship.toml".source = linkDotfile ".config/starship.toml";
+  xdg.configFile."user-dirs.dirs".source = linkDotfile ".config/user-dirs.dirs";
+  xdg.configFile."waybar" = { source = linkDotfile ".config/waybar"; recursive = true; };
 
   # Enable links opening across programs.
   xdg.portal = {
