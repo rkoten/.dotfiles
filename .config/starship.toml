@@ -11,6 +11,7 @@ $time\
 $username\
 $hostname\
 $directory\
+$nix_shell\
 $python\
 $jobs\
 [%](bold #33FF33) \
@@ -41,6 +42,12 @@ format = '[$symbol$number]($style) '
 number_threshold = 1
 symbol = '+'
 symbol_threshold = 1
+
+[nix_shell]
+impure_msg = '[impure](bold orange)'
+pure_msg = '[pure](bold green)'
+unknown_msg = '[unknown](bold red)'
+format = 'via [$state nix-shell (\($name\))](bold blue) '
 
 [python]
 format = '[\($pyenv_prefix"$virtualenv" on py$version\)]($style) '
