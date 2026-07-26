@@ -24,6 +24,11 @@ in {
       eval "$(zoxide init bash --cmd cd)"
       eval "$(starship init bash)"
     '';
+    profileExtra = ''
+      # Include .profile.local if it exists.
+      [[ -f $HOME/.profile.local ]] &&
+      source $HOME/.profile.local
+    '';
   };
 
   home.packages = with pkgs; [
@@ -36,7 +41,7 @@ in {
     gdb
     unstable.goose-cli
     # lazydocker
-    nodePackages.nodejs
+    nodejs
     unstable.opencode
     protobuf
     protoc-gen-validate
@@ -87,7 +92,7 @@ in {
     unstable.starship
     unstable.telegram-desktop
     vlc
-    ungoogled-chromium
+    # ungoogled-chromium
     unzip
     unstable.vscode
   ];
@@ -139,6 +144,7 @@ in {
     package = unstable.hyprland;
     systemd.enable = true;
     xwayland.enable = true;
+    configType = "hyprlang";  # TODO hyprlang is getting dropped - migrate to lua
     settings = {
       # https://wiki.hyprland.org/Configuring/Keywords
       # https://wiki.hyprland.org/Configuring/Variables

@@ -105,6 +105,7 @@ in {
   environment.sessionVariables = {
     NIXOS_CONFIG = "/etc/nixos/configuration.nix";
   };
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];  # Required by home-manager's xdg.portal when useUserPackages is enabled.
   environment.shellAliases = {
     nfu = "nix flake update";
     nrb = "nixos-rebuild --impure";
@@ -134,6 +135,7 @@ in {
     libmpc
     libpulseaudio
     libxcrypt
+    libX11
     unstable.lsd
     ltrace
     unstable.mesa
@@ -158,14 +160,12 @@ in {
     wireguard-tools
     wireplumber
     wl-clipboard-x11
-    xorg.libX11
     xwayland
     unstable.zoxide
   ];
 
   programs.nix-ld = {
     enable = true;
-    package = pkgs.nix-ld-rs;
     libraries = with pkgs; [
       # https://github.com/Mic92/dotfiles/blob/main/nixos/modules/nix-ld.nix
       # https://unix.stackexchange.com/a/522823
@@ -202,7 +202,7 @@ in {
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans  # Asian languages support
-    vistafonts  # Consolas <3
+    vista-fonts  # Consolas <3
   ];
 
   virtualisation.docker.enable = true;

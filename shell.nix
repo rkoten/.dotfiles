@@ -34,9 +34,9 @@
     libpulseaudio
     # libstdcxx5 should be left out of buildInputs.
     libxcrypt
+    libX11
     # unstable.mesa
     mpfr
-    xorg.libX11
     z3
     zlib
   ];
