@@ -32,10 +32,10 @@ in {
     unstable.android-tools
     unstable.antigravity-cli
     unstable.jetbrains.clion
-    docker-compose
+    # docker-compose
     gdb
     unstable.goose-cli
-    lazydocker
+    # lazydocker
     nodePackages.nodejs
     unstable.opencode
     protobuf
@@ -86,8 +86,6 @@ in {
     spotify
     unstable.starship
     unstable.telegram-desktop
-    tlrc
-    tmux
     vlc
     ungoogled-chromium
     unzip

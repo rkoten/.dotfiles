@@ -125,6 +125,7 @@ in {
     gmp
     gnumake
     gnupg
+    htop
     inetutils
     jre_minimal
     libexecinfo
@@ -147,8 +148,11 @@ in {
     rar
     unstable.ripgrep
     rustup
+    tlrc
+    unstable.tmux
     tree
     usbutils
+    unstable.uv
     wayland
     wget
     wireguard-tools
@@ -287,7 +291,7 @@ in {
   #   enableSSHSupport = true;
   # };
 
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Copies the NixOS configuration file and links it from the resulting system (/run/current-system/configuration.nix).
   # This is useful in case configuration.nix is accidentally deleted.
