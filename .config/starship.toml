@@ -44,10 +44,10 @@ symbol = '+'
 symbol_threshold = 1
 
 [nix_shell]
-impure_msg = '[impure](bold orange)'
-pure_msg = '[pure](bold green)'
-unknown_msg = '[unknown](bold red)'
-format = 'via [$state nix-shell (\($name\))](bold blue) '
+impure_msg = ''
+pure_msg = '[pure](bold green) '
+unknown_msg = '[unknown](bold red) '
+format = 'via $state[shell ("$name")](bold blue) '
 
 [python]
 format = '[\($pyenv_prefix"$virtualenv" on py$version\)]($style) '
