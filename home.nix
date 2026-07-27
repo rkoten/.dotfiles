@@ -1,7 +1,8 @@
 { config, flakeInputs, currentSystem, username, ... }:
 
 let
-  linkDotfile = path: config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/${path}";  # Works for dirs the same
+  dotfilesPath = "${config.home.homeDirectory}/.dotfiles";
+  linkDotfile = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";  # Works for dirs the same
   pkgs = import flakeInputs.nixpkgs {
     system = currentSystem;
     config.allowUnfree = true;
@@ -20,6 +21,8 @@ in {
       # Include per-user hm-session-vars.sh if it exists.
       [[ -f /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh ]] &&
       source /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
+
+      alias tm='${dotfilesPath}/scripts/tmux-session.sh'
 
       eval "$(zoxide init bash --cmd cd)"
       eval "$(starship init bash)"
@@ -41,6 +44,7 @@ in {
     gdb
     unstable.goose-cli
     # lazydocker
+    unstable.ngrok
     nodejs
     unstable.opencode
     protobuf

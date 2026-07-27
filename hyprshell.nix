@@ -1,4 +1,6 @@
 { pkgs ? import <nixpkgs> {} }: pkgs.mkShell rec {
+  name = "hyprshell";
+
   # From [3]:
   #   - If it is used at build-time it's depsBuildXXX
   #   - If it is used at run-time it's depsHostXXX.
