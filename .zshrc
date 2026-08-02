@@ -1,11 +1,15 @@
 # Only init these in interactive shell sessions (avoids issues in e.g. agentic usecases)
 if [[ $- == *i* ]]; then
+    alias bdl='bd list'
+    alias bdla='bd list --all'
+    alias bub='brew update && brew upgrade -y && brew cleanup'
     alias ls='lsd'
     alias lsa='ls -a'
     alias lsl='ls -l'
     alias lsal='ls -al'
     alias lst='ls --tree'
     alias lsat='ls -a --tree'
+    alias nv='nvim'
 
     source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 

@@ -1,7 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 add_newline = false
-scan_timeout = 50  # ms
+command_timeout = 1000  # ms
+scan_timeout = 100  # ms
 
 format = """
 $character\
