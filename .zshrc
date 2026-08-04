@@ -36,6 +36,6 @@ pyvenv() {
     local name=${1:-venv}
     local pybin=${2:-python3}
     $pybin -m venv $name
-    echo "source venv/bin/activate" >> .activate.sh
-    echo "deactivate" >> .deactivate.sh
+    echo "source $name/bin/activate" > .activate.sh
+    echo "deactivate" > .deactivate.sh
 }
