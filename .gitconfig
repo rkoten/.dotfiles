@@ -3,6 +3,7 @@
     name = Roman Kotenko
     # email = ;)
 [core]
+    editor = nvim
     excludesfile = ~/.gitignore-global
 [alias]
     a = add
