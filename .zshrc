@@ -14,6 +14,8 @@ if [[ $- == *i* ]]; then
 
     if [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
         source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    elif [[ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+        source "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     fi
 
     if type brew &>/dev/null && [[ -d "$HOMEBREW_PREFIX/share/zsh-completions" ]]; then
@@ -30,6 +32,8 @@ if [[ $- == *i* ]]; then
 
     if [[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
         source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    elif [[ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+        source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     fi
 
     source <(fzf --zsh)
