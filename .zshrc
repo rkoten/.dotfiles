@@ -10,6 +10,7 @@ if [[ $- == *i* ]]; then
     alias lsal='ls -al'
     alias lst='ls --tree'
     alias lsat='ls -a --tree'
+    alias oc='opencode'
     alias nv='nvim'
 
     if [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
