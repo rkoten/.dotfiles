@@ -1,0 +1,8 @@
+{
+  "name": "opencode-gh-attribution",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  }
+}
