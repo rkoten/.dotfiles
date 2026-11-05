@@ -13,6 +13,8 @@ if [[ $- == *i* ]]; then
     alias oc='opencode'
     alias nv='nvim'
 
+    export EDITOR='nvim'
+
     if [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
         source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     elif [[ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
@@ -62,4 +64,5 @@ pyvenv() {
     $pybin -m venv $name
     echo "source $name/bin/activate" > .activate.sh
     echo "deactivate" > .deactivate.sh
+    chmod +x .activate.sh .deactivate.sh
 }
