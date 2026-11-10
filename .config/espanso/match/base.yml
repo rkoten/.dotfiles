@@ -4,6 +4,24 @@
 
 matches:
 
+  - trigger: ":addressreview"
+    replace: "Address the feedback in the PR. If you agree with a given piece of feedback, action it and reply to the commenter in thread. {{robustprompt}} If you disagree, reply with your reasoning. {{practicalityprompt}} For all feedback that was left in top-level comments rather than anchored threads, aggregate your responses in a single top-level comment."
+    vars:
+      - name: practicalityprompt
+        type: match
+        params:
+          trigger: ":practicality"
+      - name: robustprompt
+        type: match
+        params:
+          trigger: ":robust"
+
+  - trigger: ":clarify"
+    replace: "Clarify any meaningful ambiguities before you begin – do not rely on unconfirmed assumptions unless it's an established best practice with clear consensus."
+
+  - trigger: ":cleanupreview"
+    replace: "Please return to the original workdir and clean up the worktrees post review."
+
   - trigger: ":date"
     replace: "{{mydate}}"
     vars:
@@ -20,13 +38,43 @@ matches:
         params:
           cmd: "ifconfig | grep 'inet 192' | awk '{ print $2 }'"
 
+  - trigger: ":multireview"
+    replace: |-
+      For PRs #[]: I want you to spin up a subagent (openai:gpt-6.1-sol@max) for each [let's call these level-1 subagents] and have them checkout the respective branches in new temporary worktrees, and then spawn multiple [each of {openai:gpt-6.1-terra@xhigh, openai:gpt-6.1-sol@xhigh, openrouter:moonshotai/kimi-k3.1-pro@max, openrouter:tencent/hy4, openrouter:deepseek/deepseek-v4.1-flash-1017@high}] subagents [let's call these level-2] under each level-1 and run this prompt:
+
+      > {{reviewprompt}}
+
+      Then have the level-1 ones synthesize the findings from their level-2 children and then present their outputs to me for each PR in order. If any of the branches in these PRs are stacked on top of each other, skip findings that are getting addressed further up a stack. Wait for my command before moving on to the next PR.
+    vars:
+      - name: reviewprompt
+        type: match
+        params:
+          trigger: ":review"
+
+  - trigger: ":postreview"
+    replace: "Post [] as review comments anchored to the relevant diff lines; and post [] aggregated in a single (separate, not the review body) top-level comment marked as optional to address."
+
+  - trigger: ":practicality"
+    replace: "When assessing severity, be realistic about how much a given finding practically matters."
+
+  - trigger: ":rereview"
+    replace: "Pull the latest changes and PR comments and provide updated feedback."
+
+  - trigger: ":review"
+    replace: "Review the diff between current branch and <the PR base comparison branch> for logical correctness, best practices, and maintainability. Take care to check for mixups of concerns where modules get tightly coupled to implementation details of other modules that they should be agnostic of. Summarize your findings in a list, ranked by severity. {{practicalityprompt}} Always strive to be clear and concise with your feedback. Take into account the PR description and any existing comments from the author and other reviewers to help make sense of the change and spot any inconsistencies to address. It's acceptable to find nothing worth fixing – it's better to conclude no issues when that's the case rather than make a stretch to find __something__ to report. When presenting feedback, where applicable, include example repro scenarios and the resulting risk/impact."
+    vars:
+      - name: practicalityprompt
+        type: match
+        params:
+          trigger: ":practicality"
+
+  - trigger: ":robust"
+    replace: "Without overengineering, make sure the solution is reasonably robust. Avoid band-aid kind of solutions – if necessary, consider redesigning relevant parts of architecture at hand."
+
   - trigger: ":netif"
-    replace: "Active network {{output}}"
+    replace: "{{output}}"
     vars:
       - name: output
         type: shell
         params:
           cmd: "route -n get 1.1.1.1 | grep interface"
-
-  - trigger: "!clarify"
-    replace: "Clarify any crucial ambiguities before you begin."
