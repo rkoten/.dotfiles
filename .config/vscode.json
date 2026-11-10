@@ -20,9 +20,9 @@
         "https://www.schemastore.org/": true
     },
     "update.showReleaseNotes": false,
-    "window.zoomLevel": 1,
     "workbench.browser.showInTitleBar": true,
     "workbench.colorTheme": "One Monokai",
+    "workbench.editor.showTabs": "single",
 
     "gitlens.codeLens.authors.enabled": false,
     "gitlens.codeLens.recentChange.enabled": false,
