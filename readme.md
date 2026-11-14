@@ -50,6 +50,24 @@ ps aux | grep "keyword"
 - Hex dump: `xxd` (best piped through `less`).
 
 
+## SSH
+
+### Tmux
+
+#### Search
+1. `leader [` enters copy mode
+2. `Ctrl+s` enters search
+3. enter search query, then `Enter`
+4. `n` navigates to next result, `Shift+n` navigates to previous
+
+### SSH via ghostty
+When ssh-ing from ghostty into a machine that is unaware of ghostty's metadata, an `Error opening terminal: xterm-ghostty.` may occur. To fix, once in the remote shell:
+```shell
+export TERM=xterm-256color
+```
+Reference: https://ghostty.org/docs/help/terminfo
+
+
 ## Initial setup
 
 ### Dual boot with Windows
@@ -97,13 +115,6 @@ route -n get 1.1.1.1 | grep interface
 ```shell
 networkquality
 ```
-
-### SSH via ghostty
-When ssh-ing from ghostty into a machine that is unaware of ghostty's metadata, an `Error opening terminal: xterm-ghostty.` may occur. To fix, once in the remote shell:
-```shell
-export TERM=xterm-256color
-```
-Reference: https://ghostty.org/docs/help/terminfo
 
 
 ## Nix specifics
